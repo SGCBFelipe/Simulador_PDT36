@@ -9,6 +9,7 @@ public class PDT36Controller : MonoBehaviour
     private InputAction _leftControl, _rightControl;
     [SerializeField] private Transform _leftStick, _rightStick;
     private Vector3 _tempRotLeft, _tempRotRight;
+    private MachineControl _machine;
     #endregion
 
     #region Publics
@@ -57,4 +58,24 @@ public class PDT36Controller : MonoBehaviour
         RightInput.performed += ctx => SetRightControl(ctx.ReadValue<Vector2>());
         RightInput.canceled += ctx => SetRightControl(Vector2.zero);
     }
+
+    private void FixedUpdate()
+    {
+        
+    }
+}
+
+public class MachineControl
+{
+    #region Acceleration & Deceleration System
+    void Accelerate()
+    {
+
+    }
+
+    void Decelerate()
+    {
+
+    }
+    #endregion
 }

@@ -14,14 +14,20 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _inputMap = _input.currentActionMap; //Receberá o mapa de controle selecionado
-
-        if(_input.currentActionMap.name == "Keyboard")
+        #region Assigning Controls
+        _inputMap = _input.currentActionMap; //Receive the selected control map
+        // Keyboard Controller
+        if (_input.currentActionMap.name == "Keyboard") 
         {
-            #region Left Control
-            pdt.LeftInput = _inputMap.FindAction("KB_Left");// WASD
-            pdt.RightInput = _inputMap.FindAction("KB_Right");// Arrows
-            #endregion
+            pdt.LeftInput = _inputMap.FindAction("KB_Left"); // WASD
+            pdt.RightInput = _inputMap.FindAction("KB_Right"); // Arrows
         }
+        // Xbox Controller
+        else
+        {
+            pdt.LeftInput = _inputMap.FindAction("XCTL_Left"); // Left stick
+            pdt.RightInput = _inputMap.FindAction("XCTL_Right"); // Right stick
+        }
+        #endregion
     }
 }
