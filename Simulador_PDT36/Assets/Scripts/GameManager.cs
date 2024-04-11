@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,8 +15,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        _input = GetComponent<PlayerInput>();
+        _inputMap = _input.currentActionMap;
+
         #region Assigning Controls
-        _inputMap = _input.currentActionMap; //Receive the selected control map
+        _inputMap = _input.currentActionMap; // Receive the selected control map
         // Keyboard Controller
         if (_input.currentActionMap.name == "Keyboard") 
         {
