@@ -1,6 +1,6 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class PDT36Controller : MonoBehaviour
 {
@@ -13,7 +13,15 @@ public class PDT36Controller : MonoBehaviour
     private MachineMovement _machine;
     private LeversMovement _lever;
     #endregion
-    
+
+    #region Publics
+    #region Inspector
+    [ReadOnly]
+    public float currentSpeed;
+    public float maxSpeed = 15f, accelerationRate = 10f;
+    #endregion
+    #endregion
+
     #region Getters & Setters
     public InputAction LeftInput
     {
@@ -30,12 +38,17 @@ public class PDT36Controller : MonoBehaviour
     public Vector2 SetLeftControl(Vector2 value) { return _leftMove = value; }
 
     public Vector2 SetRightControl(Vector2 value) { return _rightMove = value; }
+
+    private void CallSetCanRotate() { _machine.CanRotate = true; }
     #endregion
 
     private void Start()
     {
         _tempRotLeft = _leftStick.rotation; // Stores the initial rotation of the _leftStick
         _tempRotRight = _rightStick.rotation; // Stores the initial rotation of the _rightStick
+
+        _machine.MaxSpeed = maxSpeed;
+        _machine.AccelerationRate = accelerationRate;
     }
 
     private void Awake()
@@ -61,23 +74,95 @@ public class PDT36Controller : MonoBehaviour
         RightInput.performed += ctx => SetRightControl(ctx.ReadValue<Vector2>());
         RightInput.canceled += ctx => SetRightControl(Vector2.zero);
     }
+    
+    private void Update()
+    {
+        currentSpeed = _machine.GetCurrentSpeed;
+    }
 
     private void FixedUpdate()
     {
+        // Calculates whether there was any type of movement and then accelerates
         print(this.GetComponent<Rigidbody>().transform.position);
         if (_leftMove + _rightMove != Vector2.zero) { _machine.Accelerate(); }
         else { _machine.Decelerate(); _lever.ResetLeverRotation(); }
 
+        #region Call Movements
+        // Forward
         if (_leftMove.y > 0 && _rightMove.y > 0)
         {
             _machine.Forward();
+            _lever.LeverRotation(_leftMove, _leftStick);
+            _lever.LeverRotation(_rightMove, _rightStick);
         }
+
+        // Left
+        else if (_leftMove.x < 0 && _rightMove.x < 0)
+        {
+            _machine.Left();
+            _lever.LeverRotation(-_leftMove, _leftStick);
+            _lever.LeverRotation(-_rightMove, _rightStick);
+        }
+
+        // Right
+        else if (_leftMove.x > 0 && _rightMove.x > 0)
+        {
+            _machine.Right();
+            _lever.LeverRotation(-_leftMove, _leftStick);
+            _lever.LeverRotation(-_rightMove, _rightStick);
+        }
+
+        // Back
+        else if (_leftMove.y < 0 && _rightMove.y < 0)
+        {
+            _machine.Back();
+            _lever.LeverRotation(_leftMove, _leftStick);
+            _lever.LeverRotation(_rightMove, _rightStick);
+        }
+
+        // Can Rotate
+        else
+        {
+            Invoke("CallSetCanRotate", 1f);
+        }
+        #endregion
+
+        #region Call Rotations
+        // Left Forward
+        if (_leftMove.y > 0 && _rightMove == Vector2.zero && _machine.CanRotate)
+        {
+            _machine.LeftForward();
+            _lever.LeverRotation(_leftMove, _leftStick);
+        }
+
+        // Right Forward
+        else if (_rightMove.y > 0 && _leftMove == Vector2.zero && _machine.CanRotate)
+        {
+            _machine.RightForward();
+            _lever.LeverRotation(_rightMove, _rightStick);
+        }
+
+        // Left Back
+        else if (_leftMove.y < 0 && _rightMove == Vector2.zero && _machine.CanRotate)
+        {
+            _machine.LeftBack();
+            _lever.LeverRotation(_leftMove, _leftStick);
+        }
+
+        // Right Back
+        else if (_rightMove.y < 0 && _leftMove == Vector2.zero && _machine.CanRotate)
+        {
+            _machine.RightBack();
+            _lever.LeverRotation(_rightMove, _rightStick);
+        }
+        #endregion
     }
 }
 
+#region Movements
 public class MachineMovement
 {
-    private float currentSpeed, maxSpeed = 15f, accelerationRate = 10f, maxRotation = 20f;
+    private float currentSpeed, maxSpeed, accelerationRate;
     private bool canRotate = true;
     private GameObject PDT36;
     private Rigidbody _rb;
@@ -87,19 +172,25 @@ public class MachineMovement
 
     public GameObject SetPDT36 { set { PDT36 = value; } }
 
-    public void SetCanRotate() { canRotate = true; }
+    public bool CanRotate { get { return canRotate; } set { canRotate = value; } }
+
+    public float GetCurrentSpeed { get { return currentSpeed; } }
+
+    public float MaxSpeed { get { return maxSpeed; } set { maxSpeed = value; } }
+
+    public float AccelerationRate { get { return accelerationRate; } set { accelerationRate = value; } }
     #endregion
 
     #region Acceleration & Deceleration System
-    public void Accelerate() 
+    public void Accelerate()
     {
         Debug.Log("Entrou");
-        if(currentSpeed <= maxSpeed) { currentSpeed += accelerationRate * Time.fixedDeltaTime; }
+        if (currentSpeed <= maxSpeed) { currentSpeed += accelerationRate * Time.fixedDeltaTime; }
     }
 
     public void Decelerate()
     {
-        if (currentSpeed >= 0f) { currentSpeed -= accelerationRate * Time.fixedDeltaTime; }
+        if (currentSpeed >= 0f) { currentSpeed -= (accelerationRate * 2) * Time.fixedDeltaTime; }
         else { currentSpeed = 0f; }
     }
     #endregion
@@ -122,7 +213,7 @@ public class MachineMovement
         _rb.AddForce(-PDT36.transform.right * currentSpeed);
         canRotate = false;
     }
-    
+
     public void Right()
     {
         _rb.AddForce(PDT36.transform.right * currentSpeed);
@@ -138,6 +229,7 @@ public class MachineMovement
     public void RightForward() { PDT36.transform.Rotate(Vector3.down); }
 
     public void RightBack() { PDT36.transform.Rotate(-Vector3.down); }
+
     #endregion
 }
 
@@ -194,3 +286,25 @@ public class LeversMovement
         _rightLever.rotation = Quaternion.Slerp(_rightLever.rotation, _rightReset, 100f);
     }
 }
+#endregion
+
+#region Inspector System
+public class ReadOnlyAttribute : PropertyAttribute { }
+#if UNITY_EDITOR
+[CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
+public class ReadOnlyDrawer : PropertyDrawer
+{
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        return EditorGUI.GetPropertyHeight(property, label, true);
+    }
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        GUI.enabled = false;
+        EditorGUI.PropertyField(position, property, label, true);
+        GUI.enabled = true;
+    }
+}
+#endif
+#endregion

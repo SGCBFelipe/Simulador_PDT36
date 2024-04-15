@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.48396307, g: 0.5757423, b: 0.6802008, a: 1}
+  m_IndirectSpecularColor: {r: 0.48396307, g: 0.57574326, b: 0.6802008, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8337,7 +8337,7 @@ GameObject:
   - component: {fileID: 1817473235}
   - component: {fileID: 1817473234}
   m_Layer: 0
-  m_Name: JoyRight
+  m_Name: JoyLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9559,8 +9559,8 @@ Transform:
   m_Children:
   - {fileID: 1204575944}
   - {fileID: 1892696460}
-  - {fileID: 2073791869}
   - {fileID: 1817473233}
+  - {fileID: 2073791869}
   - {fileID: 1569063868}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9603,8 +9603,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4fcb22b8af75bf469c182a0f7b97a4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leftStick: {fileID: 2073791869}
-  _rightStick: {fileID: 1817473233}
+  _leftStick: {fileID: 1817473233}
+  _rightStick: {fileID: 2073791869}
+  currentSpeed: 0
+  maxSpeed: 15
+  accelerationRate: 30
 --- !u!1 &2073791868
 GameObject:
   m_ObjectHideFlags: 0
@@ -9617,7 +9620,7 @@ GameObject:
   - component: {fileID: 2073791871}
   - component: {fileID: 2073791870}
   m_Layer: 0
-  m_Name: JoyLeft
+  m_Name: JoyRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
