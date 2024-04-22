@@ -18,7 +18,7 @@ public class PDT36Controller : MonoBehaviour
     #region Inspector
     [ReadOnly]
     public float currentSpeed;
-    public float maxSpeed = 15f, accelerationRate = 10f;
+    public float maxSpeed = 15f, accelerationRate = 10f, decelerationRate = 2f;
     #endregion
     #endregion
 
@@ -49,6 +49,7 @@ public class PDT36Controller : MonoBehaviour
 
         _machine.MaxSpeed = maxSpeed;
         _machine.AccelerationRate = accelerationRate;
+        _machine.DecelerationRate = decelerationRate;
     }
 
     private void Awake()
@@ -83,7 +84,6 @@ public class PDT36Controller : MonoBehaviour
     private void FixedUpdate()
     {
         // Calculates whether there was any type of movement and then accelerates
-        print(this.GetComponent<Rigidbody>().transform.position);
         if (_leftMove + _rightMove != Vector2.zero) { _machine.Accelerate(); }
         else { _machine.Decelerate(); _lever.ResetLeverRotation(); }
 
@@ -129,32 +129,36 @@ public class PDT36Controller : MonoBehaviour
 
         #region Call Rotations
         // Left Forward
-        if (_leftMove.y > 0 && _rightMove == Vector2.zero && _machine.CanRotate)
+        if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate)
         {
             _machine.LeftForward();
             _lever.LeverRotation(_leftMove, _leftStick);
+            _lever.LeverRotation(_rightMove, _rightStick);
         }
 
         // Right Forward
-        else if (_rightMove.y > 0 && _leftMove == Vector2.zero && _machine.CanRotate)
+        else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate)
         {
             _machine.RightForward();
-            _lever.LeverRotation(_rightMove, _rightStick);
-        }
-
-        // Left Back
-        else if (_leftMove.y < 0 && _rightMove == Vector2.zero && _machine.CanRotate)
-        {
-            _machine.LeftBack();
             _lever.LeverRotation(_leftMove, _leftStick);
-        }
-
-        // Right Back
-        else if (_rightMove.y < 0 && _leftMove == Vector2.zero && _machine.CanRotate)
-        {
-            _machine.RightBack();
             _lever.LeverRotation(_rightMove, _rightStick);
         }
+
+        //// Left Back
+        //else if (_leftMove.y < 0 && _rightMove.y > 0 && _machine.CanRotate)
+        //{
+        //    _machine.LeftBack();
+        //    _lever.LeverRotation(_leftMove, _leftStick);
+        //    _lever.LeverRotation(_rightMove, _rightStick);
+        //}
+
+        //// Right Back
+        //else if (_rightMove.y < 0 && _leftMove.y > 0 && _machine.CanRotate)
+        //{
+        //    _machine.RightBack();
+        //    _lever.LeverRotation(_leftMove, _leftStick);
+        //    _lever.LeverRotation(_rightMove, _rightStick);
+        //}
         #endregion
     }
 }
@@ -162,7 +166,7 @@ public class PDT36Controller : MonoBehaviour
 #region Movements
 public class MachineMovement
 {
-    private float currentSpeed, maxSpeed, accelerationRate;
+    private float currentSpeed, maxSpeed, accelerationRate, decelerationRate;
     private bool canRotate = true;
     private GameObject PDT36;
     private Rigidbody _rb;
@@ -178,19 +182,20 @@ public class MachineMovement
 
     public float MaxSpeed { get { return maxSpeed; } set { maxSpeed = value; } }
 
-    public float AccelerationRate { get { return accelerationRate; } set { accelerationRate = value; } }
+    public float AccelerationRate { get { return accelerationRate; } set { accelerationRate = value; }}
+
+    public float DecelerationRate { get { return decelerationRate; } set { decelerationRate = value; }}
     #endregion
 
     #region Acceleration & Deceleration System
     public void Accelerate()
     {
-        Debug.Log("Entrou");
         if (currentSpeed <= maxSpeed) { currentSpeed += accelerationRate * Time.fixedDeltaTime; }
     }
 
     public void Decelerate()
     {
-        if (currentSpeed >= 0f) { currentSpeed -= (accelerationRate * 2) * Time.fixedDeltaTime; }
+        if (currentSpeed >= 0f) { currentSpeed -= (accelerationRate * decelerationRate) * Time.fixedDeltaTime; }
         else { currentSpeed = 0f; }
     }
     #endregion
@@ -288,7 +293,7 @@ public class LeversMovement
 }
 #endregion
 
-#region Inspector System
+#region Inspector ReadOnly System
 public class ReadOnlyAttribute : PropertyAttribute { }
 #if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]

@@ -49,12 +49,24 @@ Material:
         m_Texture: {fileID: 2800000, guid: 2408aee5b97c64a4ea050ab7d4f46eec, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NormalFromTexture_2bce4f7d33a94a9dac7222fce29c96b1_Texture_0_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 2408aee5b97c64a4ea050ab7d4f46eec, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2DLOD_19b6a03d7710487ea2141bb1b4f4d715_Texture_1_Texture2D:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2DLOD_9397d501fbe840f4bc4d411458980597_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 5dc4a97fef2f54a4098bcd7ba53c83fa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_0450836419e44f55bbe780a3c487696d_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: 5dc4a97fef2f54a4098bcd7ba53c83fa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_fec9515d83d14b0d97220bf2061306ce_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 62e771dd46e22524ab5c1b075b916dc5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -77,13 +89,17 @@ Material:
     - _DetailDistance: 1
     - _DisplacementStrenght: 0
     - _NoiseAmount: 3000
-    - _NoiseBrigthness: 15
-    - _NoiseStrength: 10
+    - _NoiseBrigthness: 25
+    - _NoiseStrength: 20
     - _NormalStrenght: 1.99
+    - _NormalStrength: 6
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Strength: 1000
+    - _TextureTilling: 10
     - _VertexOffset: 0.4
     m_Colors:
-    - _FloorColor: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 0}
+    - _FloorColor: {r: 1, g: 1, b: 1, a: 0}
+    - _TextureOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _Tilling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
