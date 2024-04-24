@@ -96,7 +96,7 @@ Material:
     - _NoiseBrigthness: 25
     - _NoiseStrength: 20
     - _NormalStrenght: 1.99
-    - _NormalStrength: 6
+    - _NormalStrength: 10
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Strength: 1000

@@ -1623,7 +1623,7 @@ GameObject:
   - component: {fileID: 308132546}
   - component: {fileID: 308132549}
   - component: {fileID: 308132547}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FloorCameraRender
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6277,7 +6277,7 @@ Transform:
   m_GameObject: {fileID: 1204575943}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -16.220001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8226,12 +8226,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601289850}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1892696460}
+  m_Father: {fileID: 2073304479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1601289852
 VFXRenderer:
@@ -8291,8 +8291,14 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 10
+      - m_Value: 5
         m_Name: Lifetime
+        m_Overridden: 1
+      - m_Value: 5
+        m_Name: Rate
+        m_Overridden: 1
+      - m_Value: 20
+        m_Name: Size
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
@@ -9584,8 +9590,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 2.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1601289851}
+  m_Children: []
   m_Father: {fileID: 2073304479}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &1892696461
@@ -10737,6 +10742,7 @@ Transform:
   - {fileID: 1817473233}
   - {fileID: 2073791869}
   - {fileID: 1569063868}
+  - {fileID: 1601289851}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2073304481
@@ -10800,7 +10806,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
