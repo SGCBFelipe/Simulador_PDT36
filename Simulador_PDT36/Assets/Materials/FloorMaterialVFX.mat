@@ -96,11 +96,11 @@ Material:
     - _NoiseBrigthness: 25
     - _NoiseStrength: 20
     - _NormalStrenght: 1.99
-    - _NormalStrength: 10
+    - _NormalStrength: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Strength: 1000
-    - _TextureTilling: 10
+    - _TextureTilling: 1
     - _VertexOffset: 0.4
     m_Colors:
     - _FloorColor: {r: 1, g: 1, b: 1, a: 0}
