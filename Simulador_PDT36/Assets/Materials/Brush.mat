@@ -44,6 +44,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _StrenghtOffset: 0.314
     m_Colors: []
   m_BuildTextureStacks: []
 --- !u!114 &6219883939175537884
