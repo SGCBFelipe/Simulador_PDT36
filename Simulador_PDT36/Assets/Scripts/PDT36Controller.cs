@@ -79,6 +79,9 @@ public class PDT36Controller : MonoBehaviour
     private void Update()
     {
         currentSpeed = _machine.GetCurrentSpeed;
+        _lever.RotationWithInput(_leftMove, _leftStick);
+        _lever.RotationWithInput(_rightMove, _rightStick);
+        Debug.Log(_lever.leverRotation);
     }
 
     private void FixedUpdate()
@@ -92,32 +95,32 @@ public class PDT36Controller : MonoBehaviour
         if (_leftMove.y > 0 && _rightMove.y > 0)
         {
             _machine.Forward();
-            _lever.LeverRotation(_leftMove, _leftStick);
-            _lever.LeverRotation(_rightMove, _rightStick);
+            //_lever.LeverRotation(_leftMove, _leftStick);
+            //_lever.LeverRotation(_rightMove, _rightStick);
         }
 
         // Left
         else if (_leftMove.x < 0 && _rightMove.x < 0)
         {
             _machine.Left();
-            _lever.LeverRotation(-_leftMove, _leftStick);
-            _lever.LeverRotation(-_rightMove, _rightStick);
+            //_lever.LeverRotation(-_leftMove, _leftStick);
+            //_lever.LeverRotation(-_rightMove, _rightStick);
         }
 
         // Right
         else if (_leftMove.x > 0 && _rightMove.x > 0)
         {
             _machine.Right();
-            _lever.LeverRotation(-_leftMove, _leftStick);
-            _lever.LeverRotation(-_rightMove, _rightStick);
+            //_lever.LeverRotation(-_leftMove, _leftStick);
+            //_lever.LeverRotation(-_rightMove, _rightStick);
         }
 
         // Back
         else if (_leftMove.y < 0 && _rightMove.y < 0)
         {
             _machine.Back();
-            _lever.LeverRotation(_leftMove, _leftStick);
-            _lever.LeverRotation(_rightMove, _rightStick);
+            //_lever.LeverRotation(_leftMove, _leftStick);
+            //_lever.LeverRotation(_rightMove, _rightStick);
         }
 
         // Can Rotate
@@ -132,33 +135,17 @@ public class PDT36Controller : MonoBehaviour
         if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate)
         {
             _machine.LeftForward();
-            _lever.LeverRotation(_leftMove, _leftStick);
-            _lever.LeverRotation(_rightMove, _rightStick);
+            //_lever.LeverRotation(_leftMove, _leftStick);
+            //_lever.LeverRotation(_rightMove, _rightStick);
         }
 
         // Right Forward
         else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate)
         {
             _machine.RightForward();
-            _lever.LeverRotation(_leftMove, _leftStick);
-            _lever.LeverRotation(_rightMove, _rightStick);
+            //_lever.LeverRotation(_leftMove, _leftStick);
+            //_lever.LeverRotation(_rightMove, _rightStick);
         }
-
-        //// Left Back
-        //else if (_leftMove.y < 0 && _rightMove.y > 0 && _machine.CanRotate)
-        //{
-        //    _machine.LeftBack();
-        //    _lever.LeverRotation(_leftMove, _leftStick);
-        //    _lever.LeverRotation(_rightMove, _rightStick);
-        //}
-
-        //// Right Back
-        //else if (_rightMove.y < 0 && _leftMove.y > 0 && _machine.CanRotate)
-        //{
-        //    _machine.RightBack();
-        //    _lever.LeverRotation(_leftMove, _leftStick);
-        //    _lever.LeverRotation(_rightMove, _rightStick);
-        //}
         #endregion
     }
 }
@@ -242,6 +229,7 @@ public class LeversMovement
 {
     private Transform _leftLever, _rightLever;
     private Quaternion _leftReset, _rightReset;
+    public Vector3 leverRotation;
 
     #region Getters & Setters
     public Transform LeftLever
@@ -269,24 +257,32 @@ public class LeversMovement
     }
     #endregion
 
-    public void LeverRotation(Vector3 input, Transform lever)
+    public void RotationWithInput(Vector3 input, Transform lever)
     {
-        input = new Vector3(input.y, 0, input.x);
-        lever.Rotate(input * 2f);
-
-        Vector3 localAngle = lever.localEulerAngles;
-
-        if (localAngle.x > 180f) { localAngle.x -= 360f; } 
-        if (localAngle.z > 180f) { localAngle.z -= 360f; }
-
-        localAngle.x = Mathf.Clamp(localAngle.x, -20f, 20f);
-        localAngle.z = Mathf.Clamp(localAngle.z, -20f, 20f);
-
-        lever.localEulerAngles = localAngle;
+        float speedRotation = 100f;
+        leverRotation = new Vector3(input.y, 0, -input.x);
+        lever.localEulerAngles = leverRotation * speedRotation;
     }
+
+    //public void LeverRotation(Vector3 input, Transform lever)
+    //{
+    //    input = new Vector3(input.y, 0, input.x);
+    //    lever.Rotate(input * 2f);
+
+    //    Vector3 localAngle = lever.localEulerAngles;
+
+    //    if (localAngle.x > 180f) { localAngle.x -= 360f; } 
+    //    if (localAngle.z > 180f) { localAngle.z -= 360f; }
+
+    //    localAngle.x = Mathf.Clamp(localAngle.x, -20f, 20f);
+    //    localAngle.z = Mathf.Clamp(localAngle.z, -20f, 20f);
+
+    //    lever.localEulerAngles = localAngle;
+    //}
 
     public void ResetLeverRotation()
     {
+        leverRotation = Vector3.zero;
         _leftLever.rotation = Quaternion.Slerp(_leftLever.rotation, _leftReset, 100f);
         _rightLever.rotation = Quaternion.Slerp(_rightLever.rotation, _rightReset, 100f);
     }
