@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.48396307, g: 0.5757423, b: 0.6802008, a: 1}
+  m_IndirectSpecularColor: {r: 0.48616096, g: 0.5773498, b: 0.68300605, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 03b39f8ecd93a9144971276e1ba048ec,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -11211,7 +11212,7 @@ Transform:
   m_GameObject: {fileID: 1204575943}
   serializedVersion: 2
   m_LocalRotation: {x: 0.4528906, y: -0, z: -0, w: 0.89156616}
-  m_LocalPosition: {x: -0.13, y: 0.88, z: -6.22}
+  m_LocalPosition: {x: -0.13, y: -1.1135427, z: -12.863887}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19571,7 +19572,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892696459}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d9bc4fa9581c65e4e877a0344f7dda5d, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

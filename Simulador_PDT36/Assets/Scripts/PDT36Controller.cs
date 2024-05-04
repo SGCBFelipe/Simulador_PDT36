@@ -79,8 +79,10 @@ public class PDT36Controller : MonoBehaviour
     private void Update()
     {
         currentSpeed = _machine.GetCurrentSpeed;
+        _move = _leftMove + _rightMove;
         _lever.RotationWithInput(_leftMove, _leftStick);
         _lever.RotationWithInput(_rightMove, _rightStick);
+        Debug.Log("Left: " + _leftMove + " / Right: " + _rightMove);
         Debug.Log(_lever.leverRotation);
     }
 
@@ -100,7 +102,7 @@ public class PDT36Controller : MonoBehaviour
         }
 
         // Left
-        else if (_leftMove.x < 0 && _rightMove.x < 0)
+        if (_leftMove.x < 0 && _rightMove.x < 0)
         {
             _machine.Left();
             //_lever.LeverRotation(-_leftMove, _leftStick);
@@ -108,7 +110,7 @@ public class PDT36Controller : MonoBehaviour
         }
 
         // Right
-        else if (_leftMove.x > 0 && _rightMove.x > 0)
+        if (_leftMove.x > 0 && _rightMove.x > 0)
         {
             _machine.Right();
             //_lever.LeverRotation(-_leftMove, _leftStick);
@@ -116,7 +118,7 @@ public class PDT36Controller : MonoBehaviour
         }
 
         // Back
-        else if (_leftMove.y < 0 && _rightMove.y < 0)
+        if (_leftMove.y < 0 && _rightMove.y < 0)
         {
             _machine.Back();
             //_lever.LeverRotation(_leftMove, _leftStick);
@@ -146,6 +148,8 @@ public class PDT36Controller : MonoBehaviour
             //_lever.LeverRotation(_leftMove, _leftStick);
             //_lever.LeverRotation(_rightMove, _rightStick);
         }
+
+        //_machine.MaxVelocity(new Vector3(_leftMove.x + _rightMove.x, 0f, _leftMove.y + _rightMove.y));
         #endregion
     }
 }
@@ -182,8 +186,17 @@ public class MachineMovement
 
     public void Decelerate()
     {
-        if (currentSpeed >= 0f) { currentSpeed -= (accelerationRate * decelerationRate) * Time.fixedDeltaTime; }
-        else { currentSpeed = 0f; }
+        if (currentSpeed >= 0f && _rb.velocity.x > 0) 
+        { 
+            Vector3 velocity = new Vector3 (_rb.velocity.x - (accelerationRate * decelerationRate) * Time.fixedDeltaTime, 0f, _rb.velocity.z);
+            _rb.velocity = velocity;
+        }
+        if (currentSpeed >= 0f && _rb.velocity.z > 0)
+        {
+            Vector3 velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z - (accelerationRate * decelerationRate) * Time.fixedDeltaTime);
+            _rb.velocity = velocity;
+        }
+        if(_rb.velocity.x <= 0 && _rb.velocity.z <= 0) { currentSpeed = 0; }
     }
     #endregion
 
@@ -223,6 +236,17 @@ public class MachineMovement
     public void RightBack() { PDT36.transform.Rotate(-Vector3.down); }
 
     #endregion
+
+    //#region Velocity System
+    //public void MaxVelocity(Vector3 input)
+    //{
+    //    Vector3 targetVelocity = input.normalized * maxSpeed;
+    //    if (_rb.velocity.magnitude > maxSpeed)
+    //    {            
+    //        _rb.velocity = targetVelocity;
+    //    }
+    //}
+    //#endregion
 }
 
 public class LeversMovement
@@ -260,7 +284,8 @@ public class LeversMovement
     public void RotationWithInput(Vector3 input, Transform lever)
     {
         float speedRotation = 100f;
-        leverRotation = new Vector3(input.y, 0, -input.x);
+        Vector3 leverRot = new Vector3(input.y, 0, -input.x);
+        leverRotation = Vector3.Lerp(lever.eulerAngles, leverRot, speedRotation);
         lever.localEulerAngles = leverRotation * speedRotation;
     }
 
@@ -271,7 +296,7 @@ public class LeversMovement
 
     //    Vector3 localAngle = lever.localEulerAngles;
 
-    //    if (localAngle.x > 180f) { localAngle.x -= 360f; } 
+    //    if (localAngle.x > 180f) { localAngle.x -= 360f; }
     //    if (localAngle.z > 180f) { localAngle.z -= 360f; }
 
     //    localAngle.x = Mathf.Clamp(localAngle.x, -20f, 20f);
