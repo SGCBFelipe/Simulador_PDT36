@@ -250,6 +250,17 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""d1c25ea0-45b8-41f4-988e-66561f08c395"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XCTL_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""Right Stick 4 Composite"",
                     ""id"": ""1cfb0449-398f-4dd8-b265-1151f35a4050"",
                     ""path"": ""2DVector"",
@@ -308,6 +319,17 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""22d55960-c5c7-464d-b4a5-08d0afc0fbe0"",
                     ""path"": ""<XInputController>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XCTL_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7ce61fb-13b9-4703-b9e9-b6d7c2af3833"",
+                    ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
