@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     #region Publics
     public PDT36Controller pdt;
+    public TextMeshProUGUI veloctyText;
     #endregion
 
     private void Awake()
@@ -27,11 +29,22 @@ public class GameManager : MonoBehaviour
             pdt.RightInput = _inputMap.FindAction("KB_Right"); // Arrows
         }
         // Xbox Controller
-        else
+        else if (_input.currentActionMap.name == "Xbox Controller")
         {
             pdt.LeftInput = _inputMap.FindAction("XCTL_Left"); // Left stick
             pdt.RightInput = _inputMap.FindAction("XCTL_Right"); // Right stick
         }
+        // VR Controller
+        else
+        {
+            pdt.LeftInput = _inputMap.FindAction("VR_Left"); // VR Left stick
+            pdt.RightInput = _inputMap.FindAction("VR_Right"); // VR Right stick
+        }
         #endregion
+    }
+
+    private void Update()
+    {
+        veloctyText.text = "Velocity: " + (int)pdt.currentSpeed;
     }
 }

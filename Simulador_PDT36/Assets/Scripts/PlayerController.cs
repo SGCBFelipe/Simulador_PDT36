@@ -338,6 +338,76 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""VR Controller"",
+            ""id"": ""12986ca5-28b8-4925-85a1-5801cf32acbb"",
+            ""actions"": [
+                {
+                    ""name"": ""VR_Left"",
+                    ""type"": ""Value"",
+                    ""id"": ""361c83ac-aec4-4422-bb5d-5e2d570194b1"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""VR_Right"",
+                    ""type"": ""Value"",
+                    ""id"": ""6ed7b7f5-6c93-441e-9410-a906757bee05"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""5415b870-2bb5-40fb-8be9-d25680f04226"",
+                    ""path"": ""<XRController>{LeftHand}/joystick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VR_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05c3b0e5-0e94-4ee0-9417-11125eb38b3f"",
+                    ""path"": ""<AndroidGamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VR_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a9c5635-fe99-4267-932b-f6000ed8bca6"",
+                    ""path"": ""<XRController>{RightHand}/joystick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VR_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""29c543a5-59c0-45fa-a355-fb1d4ed7bd12"",
+                    ""path"": ""<AndroidGamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VR_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -350,6 +420,10 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         m_XboxController = asset.FindActionMap("Xbox Controller", throwIfNotFound: true);
         m_XboxController_XCTL_Left = m_XboxController.FindAction("XCTL_Left", throwIfNotFound: true);
         m_XboxController_XCTL_Right = m_XboxController.FindAction("XCTL_Right", throwIfNotFound: true);
+        // VR Controller
+        m_VRController = asset.FindActionMap("VR Controller", throwIfNotFound: true);
+        m_VRController_VR_Left = m_VRController.FindAction("VR_Left", throwIfNotFound: true);
+        m_VRController_VR_Right = m_VRController.FindAction("VR_Right", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -515,6 +589,60 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         }
     }
     public XboxControllerActions @XboxController => new XboxControllerActions(this);
+
+    // VR Controller
+    private readonly InputActionMap m_VRController;
+    private List<IVRControllerActions> m_VRControllerActionsCallbackInterfaces = new List<IVRControllerActions>();
+    private readonly InputAction m_VRController_VR_Left;
+    private readonly InputAction m_VRController_VR_Right;
+    public struct VRControllerActions
+    {
+        private @PlayerController m_Wrapper;
+        public VRControllerActions(@PlayerController wrapper) { m_Wrapper = wrapper; }
+        public InputAction @VR_Left => m_Wrapper.m_VRController_VR_Left;
+        public InputAction @VR_Right => m_Wrapper.m_VRController_VR_Right;
+        public InputActionMap Get() { return m_Wrapper.m_VRController; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(VRControllerActions set) { return set.Get(); }
+        public void AddCallbacks(IVRControllerActions instance)
+        {
+            if (instance == null || m_Wrapper.m_VRControllerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_VRControllerActionsCallbackInterfaces.Add(instance);
+            @VR_Left.started += instance.OnVR_Left;
+            @VR_Left.performed += instance.OnVR_Left;
+            @VR_Left.canceled += instance.OnVR_Left;
+            @VR_Right.started += instance.OnVR_Right;
+            @VR_Right.performed += instance.OnVR_Right;
+            @VR_Right.canceled += instance.OnVR_Right;
+        }
+
+        private void UnregisterCallbacks(IVRControllerActions instance)
+        {
+            @VR_Left.started -= instance.OnVR_Left;
+            @VR_Left.performed -= instance.OnVR_Left;
+            @VR_Left.canceled -= instance.OnVR_Left;
+            @VR_Right.started -= instance.OnVR_Right;
+            @VR_Right.performed -= instance.OnVR_Right;
+            @VR_Right.canceled -= instance.OnVR_Right;
+        }
+
+        public void RemoveCallbacks(IVRControllerActions instance)
+        {
+            if (m_Wrapper.m_VRControllerActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IVRControllerActions instance)
+        {
+            foreach (var item in m_Wrapper.m_VRControllerActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_VRControllerActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public VRControllerActions @VRController => new VRControllerActions(this);
     public interface IKeyboardActions
     {
         void OnKB_Right(InputAction.CallbackContext context);
@@ -524,5 +652,10 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     {
         void OnXCTL_Left(InputAction.CallbackContext context);
         void OnXCTL_Right(InputAction.CallbackContext context);
+    }
+    public interface IVRControllerActions
+    {
+        void OnVR_Left(InputAction.CallbackContext context);
+        void OnVR_Right(InputAction.CallbackContext context);
     }
 }
