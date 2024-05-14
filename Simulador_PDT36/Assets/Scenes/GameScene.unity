@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.48616096, g: 0.5773498, b: 0.68300605, a: 1}
+  m_IndirectSpecularColor: {r: 0.48396307, g: 0.5757423, b: 0.6802008, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -722,7 +722,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2012867057}
@@ -863,8 +863,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _editor: {fileID: 29675458}
-  _width: 0.1
-  _height: 0.1
+  _width: 1
+  _height: 1
   _color: {r: 1, g: 1, b: 1, a: 1}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0
@@ -2772,7 +2772,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1063379425}
@@ -2913,8 +2913,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _editor: {fileID: 295814745}
-  _width: 0.1
-  _height: 0.1
+  _width: 1
+  _height: 1
   _color: {r: 1, g: 1, b: 1, a: 1}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0
@@ -6335,7 +6335,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 564250133}
@@ -6476,8 +6476,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _editor: {fileID: 761646818}
-  _width: 0.1
-  _height: 0.1
+  _width: 1
+  _height: 1
   _color: {r: 1, g: 1, b: 1, a: 1}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0
