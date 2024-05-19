@@ -19,7 +19,7 @@ public class PDT36Controller : MonoBehaviour
     #region Inspector
     [ReadOnly]
     public float currentSpeed;
-    public float maxSpeed = 15f, accelerationRate = 10f, decelerationRate = 2f, maxLeverRotation = 30f;
+    public float maxSpeed = 15f, accelerationRate = 10f, decelerationRate = 2f, leverSpeedRotation = 30f;
     public Vector3 machineVelocity;
     #endregion
     #endregion
@@ -72,7 +72,7 @@ public class PDT36Controller : MonoBehaviour
         {
             LeftLever = _leftStick,
             RightLever = _rightStick,
-            MaxRotation = maxLeverRotation,
+            SpeedRotation = leverSpeedRotation,
         };
         #endregion
         #endregion
@@ -254,7 +254,7 @@ public class MachineMovement
 public class LeversMovement
 {
     private Transform _leftLever, _rightLever;
-    private float speedRotation = 100f, maxRotation;
+    private float speed = 100f, rotationLimit = 30f;
 
     #region Getters & Setters
     public Transform LeftLever
@@ -269,20 +269,30 @@ public class LeversMovement
         set { _rightLever = value; }
     }
 
-    public float MaxRotation
+    public float SpeedRotation
     {
-        get { return maxRotation; }
-        set { maxRotation = value; }
+        get { return speed; }
+        set { speed = value; }
     }
     #endregion
 
     public void RotationWithInput(Vector3 input, Transform lever)
     {
-        Vector3 adjustedLeverRotation = new(input.y + 15f, 0f, -input.x), eulerRotation = lever.eulerAngles;
-        eulerRotation.x = Mathf.Clamp(eulerRotation.x + 15f, (eulerRotation.x + 15f) - input.y, maxRotation);
-        eulerRotation.z = Mathf.Clamp(eulerRotation.z + (eulerRotation.z + 15f) - (-input.x), 15f, maxRotation);
-        lever.rotation = Quaternion.Slerp(lever.rotation, Quaternion.Euler(eulerRotation), speedRotation * Time.deltaTime);
-        //Debug.Log($"MaxRotation: {setMaxRotation}");
+        if (input.magnitude > 0)
+        {
+            Vector3 adjustedLeverRotation = new(input.y, 0f, -input.x), currentRotation = lever.localEulerAngles;
+
+            currentRotation.x = (currentRotation.x > 180) ? currentRotation.x - 360 : currentRotation.x;
+            currentRotation.z = (currentRotation.z > 180) ? currentRotation.z - 360 : currentRotation.z;
+
+            float newRotationX = Mathf.Clamp(currentRotation.x + adjustedLeverRotation.x, 15f - rotationLimit, 15f + rotationLimit);
+            float newRotationZ = Mathf.Clamp(currentRotation.z + adjustedLeverRotation.z, -rotationLimit, rotationLimit);
+
+            Quaternion targetRotation = Quaternion.Euler(newRotationX, currentRotation.y, newRotationZ);
+
+            lever.localRotation = Quaternion.RotateTowards(lever.localRotation, targetRotation, speed);
+        }
+        else { lever.localRotation = Quaternion.Euler(15f, 0f, 0f); }
     }
 }
 #endregion
