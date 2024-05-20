@@ -105,10 +105,10 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Strength: 1000
-    - _TextureTilling: 6.97
+    - _TextureTilling: 6.91
     - _VertexOffset: 0.4
     m_Colors:
     - _FloorColor: {r: 0, g: 0, b: 0, a: 0}
-    - _TextureOffset: {r: -1.38, g: -0.9, b: 0, a: 0}
+    - _TextureOffset: {r: 1, g: 1, b: 0, a: 0}
     - _Tilling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
