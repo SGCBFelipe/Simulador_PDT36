@@ -54,7 +54,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTexture:
-        m_Texture: {fileID: 2800000, guid: 055ca3b66e5758049a3e9219d7a3f837, type: 3}
+        m_Texture: {fileID: 2800000, guid: 24fbcaec8f969f4488425f002cab38bc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RenderTexture:
@@ -78,7 +78,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture:
-        m_Texture: {fileID: 2800000, guid: 7f9d1d5b8dce5a04c8901033e9607273, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7886da79e258fe64c820f8cb9dd71384, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -105,11 +105,11 @@ Material:
     - _NoiseBrigthness: 25
     - _NoiseStrength: 20
     - _NormalStrenght: 1.99
-    - _NormalStrength: 10
+    - _NormalStrength: 4.55
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Strength: 1000
-    - _TextureTilling: 45
+    - _TextureTilling: 35
     - _VertexOffset: 0.4
     m_Colors:
     - _FloorColor: {r: 1, g: 1, b: 1, a: 0}
