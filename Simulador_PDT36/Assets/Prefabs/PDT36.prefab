@@ -2936,13 +2936,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868744163263938509}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.46656096, y: 0.0024400353, z: -0.0010678768, w: 0.88448507}
-  m_LocalPosition: {x: -0.2377845, y: 9.064329, z: -1.1231437}
+  m_LocalRotation: {x: 0.0010843015, y: -0.88448524, z: 0.4665604, w: 0.0024714172}
+  m_LocalPosition: {x: -0.23778501, y: 9.064329, z: -1.1231439}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8588047573683636809}
-  m_LocalEulerAnglesHint: {x: -0.347, y: -90.431, z: 0}
+  m_LocalEulerAnglesHint: {x: 55.623, y: -179.659, z: 0.039}
 --- !u!20 &495536894845126440
 Camera:
   m_ObjectHideFlags: 0
@@ -3959,6 +3959,8 @@ GameObject:
   - component: {fileID: 3430681181193614904}
   - component: {fileID: 1959219456624435625}
   - component: {fileID: 7719884120421165726}
+  - component: {fileID: 4425833674381581481}
+  - component: {fileID: 8106353588666694797}
   m_Layer: 0
   m_Name: LightsButtonVisual
   m_TagString: Untagged
@@ -4209,6 +4211,40 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     ColorTime: 0.1
+--- !u!65 &4425833674381581481
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2617150712198452163}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8106353588666694797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2617150712198452163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81360b77b31978743b6e59555982e114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  machine: {fileID: 8885619894156005078}
 --- !u!1 &2685698660179720358
 GameObject:
   m_ObjectHideFlags: 0
@@ -5054,7 +5090,7 @@ GameObject:
   - component: {fileID: 8186958061799767546}
   - component: {fileID: 8939536010001463891}
   m_Layer: 0
-  m_Name: OnOffBlades
+  m_Name: ActiveHUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5763,7 +5799,7 @@ GameObject:
   - component: {fileID: 272364736634943482}
   - component: {fileID: 1214898055944763133}
   m_Layer: 0
-  m_Name: OnOffBladesSurface
+  m_Name: ActiveHUDSurface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10116,8 +10152,10 @@ GameObject:
   - component: {fileID: 8878083389186323562}
   - component: {fileID: 693429694378642810}
   - component: {fileID: 4832316024453899709}
+  - component: {fileID: 6663571307486495102}
+  - component: {fileID: 191780727497824194}
   m_Layer: 0
-  m_Name: OnOffBladesButtonVisual
+  m_Name: ActiveHUDVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10366,6 +10404,40 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     ColorTime: 0.1
+--- !u!65 &6663571307486495102
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7497732015677679959}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &191780727497824194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7497732015677679959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81360b77b31978743b6e59555982e114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  machine: {fileID: 8885619894156005078}
 --- !u!1 &7506932071294418269
 GameObject:
   m_ObjectHideFlags: 0
@@ -11436,6 +11508,8 @@ GameObject:
   - component: {fileID: 7305479869031988090}
   - component: {fileID: 6287404585827228201}
   - component: {fileID: 6253303737129526230}
+  - component: {fileID: 750535128798189699}
+  - component: {fileID: 1364538726111581405}
   m_Layer: 0
   m_Name: OnOffVehicleButtonVisual
   m_TagString: Untagged
@@ -11686,6 +11760,40 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     ColorTime: 0.1
+--- !u!65 &750535128798189699
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8255008785286813397}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1364538726111581405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8255008785286813397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81360b77b31978743b6e59555982e114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  machine: {fileID: 8885619894156005078}
 --- !u!1 &8276277148275545741
 GameObject:
   m_ObjectHideFlags: 0
@@ -12207,6 +12315,12 @@ MonoBehaviour:
   decelerationRate: 30
   leverSpeedRotation: 1000
   machineVelocity: {x: 0, y: 0, z: 0}
+  machineLights:
+  - {fileID: 4197626899082734277}
+  - {fileID: 4560038928098884456}
+  - {fileID: 1895927634221277329}
+  - {fileID: 6408426841468490204}
+  canvas: {fileID: 7898367120207842441}
 --- !u!82 &4282527697539583025
 AudioSource:
   m_ObjectHideFlags: 0

@@ -334,51 +334,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8404224264446269545, guid: bd03b9386e174fd41a85ff47c8f370f4,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.23778501
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404224264446269545, guid: bd03b9386e174fd41a85ff47c8f370f4,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.1231439
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404224264446269545, guid: bd03b9386e174fd41a85ff47c8f370f4,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.0024714172
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404224264446269545, guid: bd03b9386e174fd41a85ff47c8f370f4,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.0010843015
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404224264446269545, guid: bd03b9386e174fd41a85ff47c8f370f4,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.88448524
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404224264446269545, guid: bd03b9386e174fd41a85ff47c8f370f4,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.4665604
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404224264446269545, guid: bd03b9386e174fd41a85ff47c8f370f4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 55.623
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404224264446269545, guid: bd03b9386e174fd41a85ff47c8f370f4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -179.659
-      objectReference: {fileID: 0}
-    - target: {fileID: 8404224264446269545, guid: bd03b9386e174fd41a85ff47c8f370f4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0.039
-      objectReference: {fileID: 0}
     - target: {fileID: 8588047573683636809, guid: bd03b9386e174fd41a85ff47c8f370f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -654,7 +609,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pdt: {fileID: 982654024}
   veloctyText: {fileID: 1285051754}
-  Buttons: []
 --- !u!4 &831570069
 Transform:
   m_ObjectHideFlags: 0

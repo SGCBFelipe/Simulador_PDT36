@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -13,6 +16,7 @@ public class PDT36Controller : MonoBehaviour
     private Quaternion _tempRotLeft, _tempRotRight;
     private MachineMovement _machine;
     private LeversMovement _lever;
+    private bool onOffVehicle = false, onOffLights = true, onOffCanvas = true;
     #endregion
 
     #region Publics
@@ -21,6 +25,8 @@ public class PDT36Controller : MonoBehaviour
     public float currentSpeed;
     public float maxSpeed = 15f, accelerationRate = 10f, decelerationRate = 2f, leverSpeedRotation = 30f;
     public Vector3 machineVelocity;
+    public List<GameObject> machineLights;
+    public GameObject canvas;
     #endregion
     #endregion
 
@@ -42,6 +48,29 @@ public class PDT36Controller : MonoBehaviour
     public Vector2 SetRightControl(Vector2 value) { return _rightMove = value; }
 
     private void CallSetCanRotate() { _machine.CanRotate = true; }
+    #endregion
+
+    #region Buttons
+    public void CallButtonPressed(string buttonName)
+    {
+        switch (buttonName)
+        {
+            case "OnOffVehicleButtonVisual":
+                onOffVehicle = !onOffVehicle;
+                break;
+            case "LightsButtonVisual":
+                for(int i = 0; i < machineLights.Count; i++)
+                {
+                    machineLights[i].SetActive(!onOffLights);
+                }
+                break;
+            case "ActiveHUDVisual":
+                canvas.SetActive(!onOffCanvas);
+                break;
+            default:
+                throw new WarningException($"Button named {buttonName} does not exist");
+        } 
+    }
     #endregion
 
     private void Start()
@@ -158,6 +187,8 @@ public class PDT36Controller : MonoBehaviour
         //_machine.MaxVelocity(new Vector3(_leftMove.x + _rightMove.x, 0f, _leftMove.y + _rightMove.y));
         #endregion
     }
+
+
 }
 
 #region Movements

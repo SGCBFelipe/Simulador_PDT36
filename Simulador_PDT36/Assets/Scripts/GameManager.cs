@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     #region Publics
     public PDT36Controller pdt;
     public TextMeshProUGUI veloctyText;
-    public List<GameObject> Buttons;
     #endregion
 
     private void Awake()
