@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -13,7 +14,10 @@ public class GameManager : MonoBehaviour
 
     #region Publics
     public PDT36Controller pdt;
-    public TextMeshProUGUI veloctyText;
+    public TextMeshProUGUI veloctyText, timer;
+    public TimeType timeType;
+    [SerializeField] private float timeTarget;
+    private float time;
     #endregion
 
     private void Awake()
@@ -42,10 +46,52 @@ public class GameManager : MonoBehaviour
             pdt.RightInput = _inputMap.FindAction("VR_Right"); // VR Right stick
         }
         #endregion
+
+        if (timeType == TimeType.Countdown)
+        {
+            time = timeTarget;
+        }
     }
 
     private void Update()
     {
         veloctyText.text = "Velocity: " + (int)pdt.currentSpeed;
+        switch (timeType)
+        {
+            case TimeType.Countdown:
+                Countdown();
+                break;
+            case TimeType.Time:
+                Timer();
+                break;
+        }
     }
+
+    #region Timer
+    public enum TimeType
+    {
+        Countdown,
+        Time
+    }
+
+    public void Countdown()
+    {
+        if(time > 0) { time -= Time.deltaTime; }
+        else { time = 0; }        
+        int min = Mathf.FloorToInt(time / 60);
+        int sec = Mathf.FloorToInt(time % 60);
+        timer.text = string.Format("{0:00}:{1:00}", min, sec);
+    }
+
+    public void Timer()
+    {
+        if(time <= timeTarget)
+        {
+            time += Time.deltaTime;
+            int min = Mathf.FloorToInt(time / 60);
+            int sec = Mathf.FloorToInt(time % 60);
+            timer.text = string.Format("{0:00}:{1:00}", min, sec);
+        }
+    }
+    #endregion
 }
