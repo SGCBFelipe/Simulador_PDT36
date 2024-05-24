@@ -101,11 +101,11 @@ Material:
     - _AlbedoDetailStrenght: 0
     - _DetailDistance: 1
     - _DisplacementStrenght: 0
-    - _NoiseAmount: 3000
+    - _NoiseAmount: 100000
     - _NoiseBrigthness: 25
-    - _NoiseStrength: 20
+    - _NoiseStrength: 1
     - _NormalStrenght: 1.99
-    - _NormalStrength: 4.55
+    - _NormalStrength: 2
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Strength: 1000
