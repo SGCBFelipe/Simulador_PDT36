@@ -10,14 +10,16 @@ public class GameManager : MonoBehaviour
     #region Privates
     private PlayerInput _input;
     private InputActionMap _inputMap;
+    private float time;
     #endregion
 
     #region Publics
     public PDT36Controller pdt;
-    public TextMeshProUGUI veloctyText, timer;
+    public TextMeshProUGUI veloctyText, timer, phrase;
     public TimeType timeType;
     [SerializeField] private float timeTarget;
-    private float time;
+    public List<string> phrasesList = new();
+    public bool ActivePhrase = false;
     #endregion
 
     private void Awake()
@@ -94,4 +96,22 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+
+    public void EnableNewPhrase(int index)
+    {
+        if (index >= 0 && index < phrasesList.Count)
+        {
+            phrase.text = phrasesList[index];
+            if (!ActivePhrase) 
+            {
+                phrase.GetComponent<Animator>().Play("PhraseFadeAnimation");
+                ActivePhrase = true;
+            }
+            phrasesList.RemoveAt(index);
+        }
+        else
+        {
+            Debug.LogWarning("Índice fora dos limites da lista de frases");
+        }
+    }
 }
