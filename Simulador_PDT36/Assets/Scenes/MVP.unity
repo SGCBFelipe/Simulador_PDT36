@@ -187,7 +187,7 @@ MonoBehaviour:
     m_ActionName: Xbox Controller/XCTL_Right
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 769e520f-deca-4c51-95c8-3518e240ae71
+  m_DefaultActionMap: Xbox Controller
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 264111100}
 --- !u!114 &3793155
@@ -1272,6 +1272,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &557308843 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 585074467013179208, guid: bd03b9386e174fd41a85ff47c8f370f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 6227742236971789348}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &557308847
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557308843}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &558991114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,6 +1427,12 @@ Transform:
   - {fileID: 1932396348}
   m_Father: {fileID: 1912815095}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &621375109 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 94926807321252225, guid: bd03b9386e174fd41a85ff47c8f370f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 6227742236971789348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &643388457 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -1191772666042073497, guid: 18e38f10f00eb7b4fac83b692132b3cc,
@@ -2996,6 +3030,34 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 648667387}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1910671263 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6449125501632530916, guid: bd03b9386e174fd41a85ff47c8f370f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 6227742236971789348}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1910671267
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910671263}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &1912815094
 GameObject:
   m_ObjectHideFlags: 0
@@ -4033,6 +4095,11 @@ PrefabInstance:
       propertyPath: m_RendererIndex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7154421023163154012, guid: bd03b9386e174fd41a85ff47c8f370f4,
+        type: 3}
+      propertyPath: _gameObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8404224264446269545, guid: bd03b9386e174fd41a85ff47c8f370f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4108,6 +4175,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8885619894156005078, guid: bd03b9386e174fd41a85ff47c8f370f4,
+        type: 3}
+      propertyPath: machineLights
+      value: 
+      objectReference: {fileID: 621375109}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -4115,7 +4187,15 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1964602098}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6449125501632530916, guid: bd03b9386e174fd41a85ff47c8f370f4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1910671267}
+    - targetCorrespondingSourceObject: {fileID: 585074467013179208, guid: bd03b9386e174fd41a85ff47c8f370f4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 557308847}
   m_SourcePrefab: {fileID: 100100000, guid: bd03b9386e174fd41a85ff47c8f370f4, type: 3}
 --- !u!1001 &7897217903466917889
 PrefabInstance:

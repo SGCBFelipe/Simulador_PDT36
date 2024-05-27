@@ -25,8 +25,7 @@ public class PDT36Controller : MonoBehaviour
     public float currentSpeed;
     public float maxSpeed = 15f, accelerationRate = 10f, decelerationRate = 2f, leverSpeedRotation = 30f;
     public Vector3 machineVelocity;
-    public List<GameObject> machineLights;
-    public GameObject canvas;
+    public GameObject canvas, machineLights;
     #endregion
     #endregion
 
@@ -59,10 +58,7 @@ public class PDT36Controller : MonoBehaviour
                 onOffVehicle = !onOffVehicle;
                 break;
             case "LightsButtonVisual":
-                for(int i = 0; i < machineLights.Count; i++)
-                {
-                    machineLights[i].SetActive(!onOffLights);
-                }
+                machineLights.SetActive(!onOffLights);
                 break;
             case "ActiveHUDVisual":
                 canvas.SetActive(!onOffCanvas);
