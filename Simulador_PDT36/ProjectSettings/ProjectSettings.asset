@@ -136,8 +136,6 @@ PlayerSettings:
   bundleVersion: OVRTransitionAPKVersion
   preloadedAssets:
   - {fileID: 11400000, guid: 673d43c76b295734ba7367a5b7eeef4a, type: 2}
-  - {fileID: 1298359842558675183, guid: 2adb68dde03bc084a86676d41fc456b1, type: 2}
-  - {fileID: 11400000, guid: faf8ea335bce2f642b5fc8d1293897dc, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -166,7 +164,7 @@ PlayerSettings:
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 30
+  AndroidBundleVersionCode: 33
   AndroidMinSdkVersion: 29
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0

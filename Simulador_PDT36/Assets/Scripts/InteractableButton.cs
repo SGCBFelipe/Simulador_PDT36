@@ -5,7 +5,7 @@ using UnityEngine;
 public class InteractableButton : MonoBehaviour
 {
     public PDT36Controller machine;
-    private void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision collision)
     {
         machine.CallButtonPressed(this.name);
     }
