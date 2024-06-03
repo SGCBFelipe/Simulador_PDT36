@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     #region Publics
     public PDT36Controller pdt;
+    public AudioManager audioManager;
     public TextMeshProUGUI veloctyText, timer, phrase;
     public TimeType timeType;
     [SerializeField] private float timeTarget;
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
     {
         _input = GetComponent<PlayerInput>();
         _inputMap = _input.currentActionMap;
+        pdt.onOffMachine = !pdt.onOffMachine;
+        
 
         #region Assigning Controls
         _inputMap = _input.currentActionMap; // Receive the selected control map
@@ -47,6 +50,8 @@ public class GameManager : MonoBehaviour
             pdt.LeftInput = _inputMap.FindAction("VR_Left"); // VR Left stick
             pdt.RightInput = _inputMap.FindAction("VR_Right"); // VR Right stick
         }
+
+        //_inputMap.FindAction("ButtonOnOff").performed += TurnOnOffMachine;
         #endregion
 
         if (timeType == TimeType.Countdown)
@@ -66,6 +71,34 @@ public class GameManager : MonoBehaviour
             case TimeType.Time:
                 Timer();
                 break;
+        }
+    }
+
+    //public void TurnOnOffMachine(InputAction.CallbackContext value)
+    //{
+    //    if (value.performed)
+    //    {
+    //        pdt.onOffMachine = !pdt.onOffMachine;
+    //        if (pdt.onOffMachine) { audioManager.PlaySound("Motor"); }
+    //        else { audioManager.StopSound("Motor"); }
+    //    }
+    //}
+
+    public void EnableNewPhrase(int index)
+    {
+        if (index >= 0 && index < phrasesList.Count)
+        {
+            phrase.text = phrasesList[index];
+            if (!ActivePhrase) 
+            {
+                phrase.GetComponent<Animator>().Play("PhraseFadeAnimation");
+                ActivePhrase = true;
+            }
+            phrasesList.RemoveAt(index);
+        }
+        else
+        {
+            Debug.LogWarning("Índice fora dos limites da lista de frases");
         }
     }
 
@@ -96,22 +129,4 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-
-    public void EnableNewPhrase(int index)
-    {
-        if (index >= 0 && index < phrasesList.Count)
-        {
-            phrase.text = phrasesList[index];
-            if (!ActivePhrase) 
-            {
-                phrase.GetComponent<Animator>().Play("PhraseFadeAnimation");
-                ActivePhrase = true;
-            }
-            phrasesList.RemoveAt(index);
-        }
-        else
-        {
-            Debug.LogWarning("Índice fora dos limites da lista de frases");
-        }
-    }
 }

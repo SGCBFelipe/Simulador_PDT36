@@ -44,6 +44,15 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ButtonOnOff"",
+                    ""type"": ""Button"",
+                    ""id"": ""5ff19634-5f30-465e-8c7a-e762ba926a96"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -156,6 +165,17 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""action"": ""KB_Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3c217de-b166-4cd2-9c3c-344f7a6f4e2a"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ButtonOnOff"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -180,6 +200,15 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ButtonOnOff"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7d3d921-24ba-43df-b082-ae2bbbbcd492"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -336,6 +365,28 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""action"": ""XCTL_Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6de3f0f-8024-4052-bbd8-1570bb02db88"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ButtonOnOff"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1fb55cca-37e5-4f43-a83b-e5cc8375abed"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ButtonOnOff"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -416,10 +467,12 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         m_Keyboard = asset.FindActionMap("Keyboard", throwIfNotFound: true);
         m_Keyboard_KB_Right = m_Keyboard.FindAction("KB_Right", throwIfNotFound: true);
         m_Keyboard_KB_Left = m_Keyboard.FindAction("KB_Left", throwIfNotFound: true);
+        m_Keyboard_ButtonOnOff = m_Keyboard.FindAction("ButtonOnOff", throwIfNotFound: true);
         // Xbox Controller
         m_XboxController = asset.FindActionMap("Xbox Controller", throwIfNotFound: true);
         m_XboxController_XCTL_Left = m_XboxController.FindAction("XCTL_Left", throwIfNotFound: true);
         m_XboxController_XCTL_Right = m_XboxController.FindAction("XCTL_Right", throwIfNotFound: true);
+        m_XboxController_ButtonOnOff = m_XboxController.FindAction("ButtonOnOff", throwIfNotFound: true);
         // VR Controller
         m_VRController = asset.FindActionMap("VR Controller", throwIfNotFound: true);
         m_VRController_VR_Left = m_VRController.FindAction("VR_Left", throwIfNotFound: true);
@@ -487,12 +540,14 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     private List<IKeyboardActions> m_KeyboardActionsCallbackInterfaces = new List<IKeyboardActions>();
     private readonly InputAction m_Keyboard_KB_Right;
     private readonly InputAction m_Keyboard_KB_Left;
+    private readonly InputAction m_Keyboard_ButtonOnOff;
     public struct KeyboardActions
     {
         private @PlayerController m_Wrapper;
         public KeyboardActions(@PlayerController wrapper) { m_Wrapper = wrapper; }
         public InputAction @KB_Right => m_Wrapper.m_Keyboard_KB_Right;
         public InputAction @KB_Left => m_Wrapper.m_Keyboard_KB_Left;
+        public InputAction @ButtonOnOff => m_Wrapper.m_Keyboard_ButtonOnOff;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -508,6 +563,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @KB_Left.started += instance.OnKB_Left;
             @KB_Left.performed += instance.OnKB_Left;
             @KB_Left.canceled += instance.OnKB_Left;
+            @ButtonOnOff.started += instance.OnButtonOnOff;
+            @ButtonOnOff.performed += instance.OnButtonOnOff;
+            @ButtonOnOff.canceled += instance.OnButtonOnOff;
         }
 
         private void UnregisterCallbacks(IKeyboardActions instance)
@@ -518,6 +576,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @KB_Left.started -= instance.OnKB_Left;
             @KB_Left.performed -= instance.OnKB_Left;
             @KB_Left.canceled -= instance.OnKB_Left;
+            @ButtonOnOff.started -= instance.OnButtonOnOff;
+            @ButtonOnOff.performed -= instance.OnButtonOnOff;
+            @ButtonOnOff.canceled -= instance.OnButtonOnOff;
         }
 
         public void RemoveCallbacks(IKeyboardActions instance)
@@ -541,12 +602,14 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     private List<IXboxControllerActions> m_XboxControllerActionsCallbackInterfaces = new List<IXboxControllerActions>();
     private readonly InputAction m_XboxController_XCTL_Left;
     private readonly InputAction m_XboxController_XCTL_Right;
+    private readonly InputAction m_XboxController_ButtonOnOff;
     public struct XboxControllerActions
     {
         private @PlayerController m_Wrapper;
         public XboxControllerActions(@PlayerController wrapper) { m_Wrapper = wrapper; }
         public InputAction @XCTL_Left => m_Wrapper.m_XboxController_XCTL_Left;
         public InputAction @XCTL_Right => m_Wrapper.m_XboxController_XCTL_Right;
+        public InputAction @ButtonOnOff => m_Wrapper.m_XboxController_ButtonOnOff;
         public InputActionMap Get() { return m_Wrapper.m_XboxController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -562,6 +625,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @XCTL_Right.started += instance.OnXCTL_Right;
             @XCTL_Right.performed += instance.OnXCTL_Right;
             @XCTL_Right.canceled += instance.OnXCTL_Right;
+            @ButtonOnOff.started += instance.OnButtonOnOff;
+            @ButtonOnOff.performed += instance.OnButtonOnOff;
+            @ButtonOnOff.canceled += instance.OnButtonOnOff;
         }
 
         private void UnregisterCallbacks(IXboxControllerActions instance)
@@ -572,6 +638,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @XCTL_Right.started -= instance.OnXCTL_Right;
             @XCTL_Right.performed -= instance.OnXCTL_Right;
             @XCTL_Right.canceled -= instance.OnXCTL_Right;
+            @ButtonOnOff.started -= instance.OnButtonOnOff;
+            @ButtonOnOff.performed -= instance.OnButtonOnOff;
+            @ButtonOnOff.canceled -= instance.OnButtonOnOff;
         }
 
         public void RemoveCallbacks(IXboxControllerActions instance)
@@ -647,11 +716,13 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     {
         void OnKB_Right(InputAction.CallbackContext context);
         void OnKB_Left(InputAction.CallbackContext context);
+        void OnButtonOnOff(InputAction.CallbackContext context);
     }
     public interface IXboxControllerActions
     {
         void OnXCTL_Left(InputAction.CallbackContext context);
         void OnXCTL_Right(InputAction.CallbackContext context);
+        void OnButtonOnOff(InputAction.CallbackContext context);
     }
     public interface IVRControllerActions
     {

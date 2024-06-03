@@ -21,11 +21,13 @@ public class PDT36Controller : MonoBehaviour
 
     #region Publics
     #region Inspector
-    [ReadOnly]
-    public float currentSpeed;
+    public GameManager manager;
+    [ReadOnly] public float currentSpeed;
     public float maxSpeed = 15f, accelerationRate = 10f, decelerationRate = 2f, leverSpeedRotation = 30f;
     public Vector3 machineVelocity;
     public GameObject canvas, machineLights;
+    public bool onOffMachine = false;
+    public Animator RbladesAnimator, LbladesAnimator;
     #endregion
     #endregion
 
@@ -106,8 +108,12 @@ public class PDT36Controller : MonoBehaviour
         LeftInput.canceled += ctx => SetLeftControl(Vector2.zero);
         RightInput.performed += ctx => SetRightControl(ctx.ReadValue<Vector2>());
         RightInput.canceled += ctx => SetRightControl(Vector2.zero);
+
+        RbladesAnimator.SetBool("Active", true); 
+        LbladesAnimator.SetBool("Active", true);
+        manager.audioManager.PlaySound("Laminas");
     }
-    
+
     private void Update()
     {
         currentSpeed = _machine.GetCurrentSpeed;
@@ -119,72 +125,84 @@ public class PDT36Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Calculates whether there was any type of movement and then accelerates
-        if (_leftMove + _rightMove != Vector2.zero) { _machine.AccelerateSpeed(); }
-        else { _machine.DecelerateSpeed(); }
-
-        #region Call Movements
-        // Forward
-        if (_leftMove.y > 0 && _rightMove.y > 0)
+        //It only works when the machine is turned on
+        if (onOffMachine)
         {
-            _machine.Forward();
-            //_lever.LeverRotation(_leftMove, _leftStick);
-            //_lever.LeverRotation(_rightMove, _rightStick);
-        }
+            // Calculates whether there was any type of movement and then accelerates
+            if (_leftMove + _rightMove != Vector2.zero)
+            { 
+                _machine.AccelerateSpeed(); 
+                //RbladesAnimator.SetBool("Active", true); 
+                //LbladesAnimator.SetBool("Active", true);
+            }
+            else 
+            { 
+                _machine.DecelerateSpeed(); 
+                //RbladesAnimator.SetBool("Active", false); 
+                //LbladesAnimator.SetBool("Active", false);
+            }
 
-        // Left
-        if (_leftMove.x < 0 && _rightMove.x < 0)
-        {
-            _machine.Left();
-            //_lever.LeverRotation(-_leftMove, _leftStick);
-            //_lever.LeverRotation(-_rightMove, _rightStick);
-        }
+            #region Call Movements
+            // Forward
+            if (_leftMove.y > 0 && _rightMove.y > 0)
+            {
+                _machine.Forward();
+                //_lever.LeverRotation(_leftMove, _leftStick);
+                //_lever.LeverRotation(_rightMove, _rightStick);
+            }
 
-        // Right
-        if (_leftMove.x > 0 && _rightMove.x > 0)
-        {
-            _machine.Right();
-            //_lever.LeverRotation(-_leftMove, _leftStick);
-            //_lever.LeverRotation(-_rightMove, _rightStick);
-        }
+            // Left
+            if (_leftMove.x < 0 && _rightMove.x < 0)
+            {
+                _machine.Left();
+                //_lever.LeverRotation(-_leftMove, _leftStick);
+                //_lever.LeverRotation(-_rightMove, _rightStick);
+            }
 
-        // Back
-        if (_leftMove.y < 0 && _rightMove.y < 0)
-        {
-            _machine.Back();
-            //_lever.LeverRotation(_leftMove, _leftStick);
-            //_lever.LeverRotation(_rightMove, _rightStick);
-        }
+            // Right
+            if (_leftMove.x > 0 && _rightMove.x > 0)
+            {
+                _machine.Right();
+                //_lever.LeverRotation(-_leftMove, _leftStick);
+                //_lever.LeverRotation(-_rightMove, _rightStick);
+            }
 
-        // Can Rotate
-        else
-        {
-            Invoke(nameof(CallSetCanRotate), 1f);
-        }
-        #endregion
+            // Back
+            if (_leftMove.y < 0 && _rightMove.y < 0)
+            {
+                _machine.Back();
+                //_lever.LeverRotation(_leftMove, _leftStick);
+                //_lever.LeverRotation(_rightMove, _rightStick);
+            }
 
-        #region Call Rotations
-        // Left Forward
-        if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate)
-        {
-            _machine.LeftForward();
-            //_lever.LeverRotation(_leftMove, _leftStick);
-            //_lever.LeverRotation(_rightMove, _rightStick);
-        }
+            // Can Rotate
+            else
+            {
+                Invoke(nameof(CallSetCanRotate), 1f);
+            }
+            #endregion
 
-        // Right Forward
-        else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate)
-        {
-            _machine.RightForward();
-            //_lever.LeverRotation(_leftMove, _leftStick);
-            //_lever.LeverRotation(_rightMove, _rightStick);
-        }
+            #region Call Rotations
+            // Left Forward
+            if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate)
+            {
+                _machine.LeftForward();
+                //_lever.LeverRotation(_leftMove, _leftStick);
+                //_lever.LeverRotation(_rightMove, _rightStick);
+            }
 
-        //_machine.MaxVelocity(new Vector3(_leftMove.x + _rightMove.x, 0f, _leftMove.y + _rightMove.y));
-        #endregion
+            // Right Forward
+            else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate)
+            {
+                _machine.RightForward();
+                //_lever.LeverRotation(_leftMove, _leftStick);
+                //_lever.LeverRotation(_rightMove, _rightStick);
+            }
+
+            //_machine.MaxVelocity(new Vector3(_leftMove.x + _rightMove.x, 0f, _leftMove.y + _rightMove.y));
+            #endregion
+        }
     }
-
-
 }
 
 #region Movements
