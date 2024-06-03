@@ -5,6 +5,7 @@ using System;
 public class AudioManager : MonoBehaviour
 {
     public Sounds[] sounds;
+    public Sounds currentSound;
 
     void Awake()
     {
@@ -19,6 +20,14 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        foreach(Sounds s in sounds)
+        {
+            if (s.source.isPlaying) { currentSound = s; break; }
+        }
+    }
+
     public void PlaySound(string name)
     {
         Sounds s = Array.Find(sounds, sound => sound.name == name);
@@ -29,5 +38,11 @@ public class AudioManager : MonoBehaviour
     {
         Sounds s = Array.Find(sounds, sound => sound.name == name);
         s.source.Stop();
+    }
+
+    public AudioSource GetAudioSource(string name)
+    {
+        Sounds s = Array.Find(sounds, sound => sound.name == name);
+        return s.source;
     }
 }

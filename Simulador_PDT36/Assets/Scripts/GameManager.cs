@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     {
         _input = GetComponent<PlayerInput>();
         _inputMap = _input.currentActionMap;
-        pdt.onOffMachine = !pdt.onOffMachine;
         
 
         #region Assigning Controls
@@ -74,15 +73,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //public void TurnOnOffMachine(InputAction.CallbackContext value)
-    //{
-    //    if (value.performed)
-    //    {
-    //        pdt.onOffMachine = !pdt.onOffMachine;
-    //        if (pdt.onOffMachine) { audioManager.PlaySound("Motor"); }
-    //        else { audioManager.StopSound("Motor"); }
-    //    }
-    //}
+    public void TurnOnOffMachine(InputAction.CallbackContext value)
+    {
+        if (value.performed)
+        {
+            pdt.onOffMachine = !pdt.onOffMachine;
+            if (pdt.onOffMachine) { audioManager.PlaySound("Partida"); }
+            StartCoroutine(PlayMotor());
+        }
+    }
+
+    private IEnumerator PlayMotor()
+    {
+        AudioSource partidaSource = audioManager.GetAudioSource("Partida");
+        while (partidaSource.isPlaying)
+        {
+            yield return null;
+        }
+
+        audioManager.PlaySound("Motor");
+    }
 
     public void EnableNewPhrase(int index)
     {

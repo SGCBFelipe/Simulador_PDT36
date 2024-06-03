@@ -16,7 +16,7 @@ public class PDT36Controller : MonoBehaviour
     private Quaternion _tempRotLeft, _tempRotRight;
     private MachineMovement _machine;
     private LeversMovement _lever;
-    private bool onOffVehicle = false, onOffLights = true, onOffCanvas = true;
+    private bool onOffVehicle = false, onOffLights = true, onOffCanvas = true, previousBladesState = false;
     #endregion
 
     #region Publics
@@ -26,7 +26,7 @@ public class PDT36Controller : MonoBehaviour
     public float maxSpeed = 15f, accelerationRate = 10f, decelerationRate = 2f, leverSpeedRotation = 30f;
     public Vector3 machineVelocity;
     public GameObject canvas, machineLights;
-    public bool onOffMachine = false;
+    public bool onOffMachine = false, blades = false;
     public Animator RbladesAnimator, LbladesAnimator;
     #endregion
     #endregion
@@ -108,10 +108,6 @@ public class PDT36Controller : MonoBehaviour
         LeftInput.canceled += ctx => SetLeftControl(Vector2.zero);
         RightInput.performed += ctx => SetRightControl(ctx.ReadValue<Vector2>());
         RightInput.canceled += ctx => SetRightControl(Vector2.zero);
-
-        RbladesAnimator.SetBool("Active", true); 
-        LbladesAnimator.SetBool("Active", true);
-        manager.audioManager.PlaySound("Laminas");
     }
 
     private void Update()
@@ -131,75 +127,57 @@ public class PDT36Controller : MonoBehaviour
             // Calculates whether there was any type of movement and then accelerates
             if (_leftMove + _rightMove != Vector2.zero)
             { 
-                _machine.AccelerateSpeed(); 
-                //RbladesAnimator.SetBool("Active", true); 
-                //LbladesAnimator.SetBool("Active", true);
+                _machine.AccelerateSpeed();
+                blades = true;                
             }
             else 
             { 
-                _machine.DecelerateSpeed(); 
-                //RbladesAnimator.SetBool("Active", false); 
-                //LbladesAnimator.SetBool("Active", false);
+                _machine.DecelerateSpeed();
+                blades = false;                
+            }
+
+            if (blades != previousBladesState)
+            {
+                if (blades)
+                {
+                    //manager.audioManager.StopSound(manager.audioManager.currentSound.name);
+                    manager.audioManager.PlaySound("Laminas");
+                    RbladesAnimator.SetBool("Active", true);
+                    LbladesAnimator.SetBool("Active", true);
+                }
+                else
+                {
+                    manager.audioManager.StopSound("Laminas");
+                    RbladesAnimator.SetBool("Active", false);
+                    LbladesAnimator.SetBool("Active", false);
+                }
+
+                previousBladesState = blades;
             }
 
             #region Call Movements
             // Forward
-            if (_leftMove.y > 0 && _rightMove.y > 0)
-            {
-                _machine.Forward();
-                //_lever.LeverRotation(_leftMove, _leftStick);
-                //_lever.LeverRotation(_rightMove, _rightStick);
-            }
+            if (_leftMove.y > 0 && _rightMove.y > 0) { _machine.Forward(); }
 
             // Left
-            if (_leftMove.x < 0 && _rightMove.x < 0)
-            {
-                _machine.Left();
-                //_lever.LeverRotation(-_leftMove, _leftStick);
-                //_lever.LeverRotation(-_rightMove, _rightStick);
-            }
+            if (_leftMove.x < 0 && _rightMove.x < 0) { _machine.Left(); }
 
             // Right
-            if (_leftMove.x > 0 && _rightMove.x > 0)
-            {
-                _machine.Right();
-                //_lever.LeverRotation(-_leftMove, _leftStick);
-                //_lever.LeverRotation(-_rightMove, _rightStick);
-            }
+            if (_leftMove.x > 0 && _rightMove.x > 0) { _machine.Right(); }
 
             // Back
-            if (_leftMove.y < 0 && _rightMove.y < 0)
-            {
-                _machine.Back();
-                //_lever.LeverRotation(_leftMove, _leftStick);
-                //_lever.LeverRotation(_rightMove, _rightStick);
-            }
+            if (_leftMove.y < 0 && _rightMove.y < 0) { _machine.Back(); }
 
             // Can Rotate
-            else
-            {
-                Invoke(nameof(CallSetCanRotate), 1f);
-            }
+            else { Invoke(nameof(CallSetCanRotate), 1f); }
             #endregion
 
             #region Call Rotations
             // Left Forward
-            if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate)
-            {
-                _machine.LeftForward();
-                //_lever.LeverRotation(_leftMove, _leftStick);
-                //_lever.LeverRotation(_rightMove, _rightStick);
-            }
+            if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate) { _machine.LeftForward(); }
 
             // Right Forward
-            else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate)
-            {
-                _machine.RightForward();
-                //_lever.LeverRotation(_leftMove, _leftStick);
-                //_lever.LeverRotation(_rightMove, _rightStick);
-            }
-
-            //_machine.MaxVelocity(new Vector3(_leftMove.x + _rightMove.x, 0f, _leftMove.y + _rightMove.y));
+            else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate) { _machine.RightForward(); }
             #endregion
         }
     }
@@ -272,11 +250,7 @@ public class MachineMovement
     #region Rotation System
     public void LeftForward() { PDT36.transform.Rotate(Vector3.up); }
 
-    public void LeftBack() { PDT36.transform.Rotate(-Vector3.up); }
-
     public void RightForward() { PDT36.transform.Rotate(Vector3.down); }
-
-    public void RightBack() { PDT36.transform.Rotate(-Vector3.down); }
 
     #endregion
 
@@ -288,10 +262,7 @@ public class MachineMovement
 
     public void Stop()
     {
-        if (currentSpeed < 0 && _rb.velocity.magnitude > 0)
-        {
-            _rb.velocity = Vector3.zero;
-        }
+        if (currentSpeed < 0 && _rb.velocity.magnitude > 0) { _rb.velocity = Vector3.zero; }
     }
     #endregion
 }
