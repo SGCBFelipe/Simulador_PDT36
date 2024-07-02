@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
             phrase.text = phrasesList[index];
             if (!ActivePhrase) 
             {
-                phrase.GetComponent<Animator>().Play("PhraseFadeAnimation");
+                phrase.GetComponent<Animator>().SetBool("Active", true);
                 ActivePhrase = true;
             }
             phrasesList.RemoveAt(index);

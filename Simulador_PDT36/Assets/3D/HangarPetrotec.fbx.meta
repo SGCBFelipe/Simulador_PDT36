@@ -3,7 +3,57 @@ guid: 3dac3c860c2fadc42ade301b669ef2ac
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BaseMaterial
+    second: {fileID: 2100000, guid: 211547f2caf6d9646b8f6ebf5701b36b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BeamMaterial
+    second: {fileID: 2100000, guid: 6e43cb07a5d1fde49b5cb13a9dc7c82e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GuntterMaterial
+    second: {fileID: 2100000, guid: 3f5189a7200daa644bca83d77b98f29d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PillarMaterial
+    second: {fileID: 2100000, guid: 66c40f7c8045d5847a48758ac142a719, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RoofMaterial
+    second: {fileID: 2100000, guid: 71490178bb0f05549a756a69f72d7ce0, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Concrete_017_basecolor
+    second: {fileID: 2800000, guid: d2e801831f78f304bbb6fa4619e9275e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Concrete_017_normal
+    second: {fileID: 2800000, guid: 5fb80d44481ec1d458b87cebc76bef4c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Corrugated_Metal_004_COLOR
+    second: {fileID: 2800000, guid: 3c120efaaae122548a3aa0f19fcd5f85, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Corrugated_Metal_004_NORM
+    second: {fileID: 2800000, guid: d4933dd9d89be9c47b94403bcb2c933c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Metal_006_normal
+    second: {fileID: 2800000, guid: ad8f0a1cfd580ba4e9d5e3d558853af0, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
