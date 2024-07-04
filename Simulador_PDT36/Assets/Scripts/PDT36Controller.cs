@@ -127,8 +127,7 @@ public class PDT36Controller : MonoBehaviour
             // Calculates whether there was any type of movement and then accelerates
             if (_leftMove + _rightMove != Vector2.zero)
             { 
-                _machine.AccelerateSpeed();
-                blades = true;                
+                _machine.AccelerateSpeed();    
             }
             else 
             { 
@@ -157,16 +156,16 @@ public class PDT36Controller : MonoBehaviour
 
             #region Call Movements
             // Forward
-            if (_leftMove.y > 0 && _rightMove.y > 0) { _machine.Forward(); }
+            if (_leftMove.y > 0 && _rightMove.y > 0) { _machine.Forward(); blades = true; }
 
             // Left
-            if (_leftMove.x < 0 && _rightMove.x < 0) { _machine.Left(); }
+            if (_rightMove.x < 0) { _machine.Left(); blades = true; }
 
             // Right
-            if (_leftMove.x > 0 && _rightMove.x > 0) { _machine.Right(); }
+            if (_rightMove.x > 0) { _machine.Right(); blades = true; }
 
             // Back
-            if (_leftMove.y < 0 && _rightMove.y < 0) { _machine.Back(); }
+            if (_leftMove.y < 0 && _rightMove.y < 0) { _machine.Back(); blades = true; }
 
             // Can Rotate
             else { Invoke(nameof(CallSetCanRotate), 1f); }
