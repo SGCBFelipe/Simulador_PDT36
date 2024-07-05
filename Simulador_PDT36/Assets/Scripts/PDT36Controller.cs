@@ -4,6 +4,7 @@ using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.InputSystem;
 
 public class PDT36Controller : MonoBehaviour
@@ -159,10 +160,10 @@ public class PDT36Controller : MonoBehaviour
             if (_leftMove.y > 0 && _rightMove.y > 0) { _machine.Forward(); blades = true; }
 
             // Left
-            if (_rightMove.x < 0) { _machine.Left(); blades = true; }
+            if (_rightMove.x > 0) { _machine.Left(); blades = true; }
 
             // Right
-            if (_rightMove.x > 0) { _machine.Right(); blades = true; }
+            if (_rightMove.x < 0) { _machine.Right(); blades = true; }
 
             // Back
             if (_leftMove.y < 0 && _rightMove.y < 0) { _machine.Back(); blades = true; }
