@@ -133,7 +133,7 @@ public class PDT36Controller : MonoBehaviour
             else 
             { 
                 _machine.DecelerateSpeed();
-                blades = false;                
+                blades = false;
             }
 
             if (blades != previousBladesState)
@@ -160,10 +160,10 @@ public class PDT36Controller : MonoBehaviour
             if (_leftMove.y > 0 && _rightMove.y > 0) { _machine.Forward(); blades = true; }
 
             // Left
-            if (_rightMove.x > 0) { _machine.Left(); blades = true; }
+            if (_rightMove.x < -0.5) { _machine.Left(); blades = true; }
 
             // Right
-            if (_rightMove.x < 0) { _machine.Right(); blades = true; }
+            if (_rightMove.x > 0.5) { _machine.Right(); blades = true; }
 
             // Back
             if (_leftMove.y < 0 && _rightMove.y < 0) { _machine.Back(); blades = true; }
@@ -174,10 +174,10 @@ public class PDT36Controller : MonoBehaviour
 
             #region Call Rotations
             // Left Forward
-            if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate) { _machine.LeftForward(); }
+            if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate) { _machine.LeftForward(); blades = true; }
 
             // Right Forward
-            else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate) { _machine.RightForward(); }
+            else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate) { _machine.RightForward(); blades = true; }
             #endregion
         }
     }
@@ -306,7 +306,7 @@ public class LeversMovement
 
             Quaternion targetRotation = Quaternion.Euler(newRotationX, currentRotation.y, newRotationZ);
 
-            lever.localRotation = Quaternion.RotateTowards(lever.localRotation, targetRotation, speed);
+            lever.localRotation = Quaternion.RotateTowards(lever.localRotation, targetRotation, speed * Time.deltaTime);
         }
         else { lever.localRotation = Quaternion.Euler(15f, 0f, 0f); }
     }
