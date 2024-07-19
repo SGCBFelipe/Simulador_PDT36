@@ -5,21 +5,26 @@ using UnityEngine;
 public class CatchOrb : MonoBehaviour
 {
     public GameManager manager;
-    private int phrasesCount;
+    private int imagesCount;
 
     [System.Obsolete]
     private void OnTriggerEnter(Collider other)
     {
-        if (manager.phrasesList != null && manager.phrasesList.Count != 0)
+        if (manager.imagesList != null && manager.imagesList.Count != 0)
         {
-            phrasesCount = Random.RandomRange(0, manager.phrasesList.Count);
-            manager.ActivePhrase = false;
-            manager.EnableNewPhrase(phrasesCount);
+            imagesCount = Random.RandomRange(0, manager.imagesList.Count);
+            manager.ActiveImage = false;
+            manager.EnableNewPhrase(imagesCount);
             Destroy(gameObject);
         }
         else
         {
             Debug.LogWarning("Não há frases na lista");
         }
+    }
+
+    public void StopImageAnimation()
+    {
+        manager.orbImage.GetComponent<Animator>().SetBool("Active", false);
     }
 }

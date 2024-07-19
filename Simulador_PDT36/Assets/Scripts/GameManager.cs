@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,11 +17,12 @@ public class GameManager : MonoBehaviour
     #region Publics
     public PDT36Controller pdt;
     public AudioManager audioManager;
-    public TextMeshProUGUI veloctyText, timer, phrase;
+    public TextMeshProUGUI veloctyText, timer;
+    public GameObject orbImage;
     public TimeType timeType;
     [SerializeField] private float timeTarget;
-    public List<string> phrasesList = new();
-    public bool ActivePhrase = false;
+    public List<Sprite> imagesList = new();
+    public bool ActiveImage = false;
     #endregion
 
     private void Awake()
@@ -96,15 +98,15 @@ public class GameManager : MonoBehaviour
 
     public void EnableNewPhrase(int index)
     {
-        if (index >= 0 && index < phrasesList.Count)
+        if (index >= 0 && index < imagesList.Count)
         {
-            phrase.text = phrasesList[index];
-            if (!ActivePhrase) 
+            orbImage.GetComponent<Image>().sprite = imagesList[index];
+            if (!ActiveImage) 
             {
-                phrase.GetComponent<Animator>().SetBool("Active", true);
-                ActivePhrase = true;
+                orbImage.GetComponent<Animator>().SetBool("Active", true);
+                ActiveImage = true;
             }
-            phrasesList.RemoveAt(index);
+            imagesList.RemoveAt(index);
         }
         else
         {
