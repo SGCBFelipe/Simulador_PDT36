@@ -157,16 +157,16 @@ public class PDT36Controller : MonoBehaviour
 
             #region Call Movements
             // Forward
-            if (_leftMove.y > 0 && _rightMove.y > 0) { _machine.Forward(); blades = true; }
+            if (_leftMove.y > 0 && _rightMove.y > 0) { _machine.Forward(); blades = true;}
 
             // Left
-            if (_rightMove.x < -0.5) { _machine.Left(); blades = true; }
+            if (_rightMove.x < -0.5) { _machine.Left(); blades = true;}
 
             // Right
-            if (_rightMove.x > 0.5) { _machine.Right(); blades = true; }
+            if (_rightMove.x > 0.5) { _machine.Right(); blades = true;}
 
             // Back
-            if (_leftMove.y < 0 && _rightMove.y < 0) { _machine.Back(); blades = true; }
+            if (_leftMove.y < 0 && _rightMove.y < 0) { _machine.Back(); blades = true;}
 
             // Can Rotate
             else { Invoke(nameof(CallSetCanRotate), 1f); }
@@ -174,10 +174,10 @@ public class PDT36Controller : MonoBehaviour
 
             #region Call Rotations
             // Left Forward
-            if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate) { _machine.LeftForward(); blades = true; }
+            if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate) { _machine.LeftForward(); blades = true;}
 
             // Right Forward
-            else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate) { _machine.RightForward(); blades = true; }
+            else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate) { _machine.RightForward(); blades = true;}
             #endregion
         }
     }
@@ -294,21 +294,25 @@ public class LeversMovement
 
     public void RotationWithInput(Vector3 input, Transform lever)
     {
-        if (input.magnitude > 0)
-        {
-            Vector3 adjustedLeverRotation = new(input.y, 0f, -input.x), currentRotation = lever.localEulerAngles;
+        float clampX = Math.Clamp(input.x, -0.5f, 0.5f);
+        float clampY = Math.Clamp(input.y, -0.5f, 0.5f);
 
-            currentRotation.x = (currentRotation.x > 180) ? currentRotation.x - 360 : currentRotation.x;
-            currentRotation.z = (currentRotation.z > 180) ? currentRotation.z - 360 : currentRotation.z;
+        lever.localRotation = new(clampY, 0f, -clampX, 1f);
 
-            float newRotationX = Mathf.Clamp(currentRotation.x + adjustedLeverRotation.x, 15f - rotationLimit, 15f + rotationLimit);
-            float newRotationZ = Mathf.Clamp(currentRotation.z + adjustedLeverRotation.z, -rotationLimit, rotationLimit);
+        //if (input.magnitude > 0)
+        //{
+        //    //Vector3 adjustedLeverRotation = new(input.y, 0f, -input.x), currentRotation = lever.localEulerAngles;
 
-            Quaternion targetRotation = Quaternion.Euler(newRotationX, currentRotation.y, newRotationZ);
+        //    //currentRotation.x = (currentRotation.x > 180) ? currentRotation.x - 360 : currentRotation.x;
+        //    //currentRotation.z = (currentRotation.z > 180) ? currentRotation.z - 360 : currentRotation.z;
 
-            lever.localRotation = Quaternion.RotateTowards(lever.localRotation, targetRotation, speed * Time.deltaTime);
-        }
-        else { lever.localRotation = Quaternion.Euler(15f, 0f, 0f); }
+        //    //float newRotationX = Mathf.Clamp(currentRotation.x + adjustedLeverRotation.x, 15f - rotationLimit, 15f + rotationLimit);
+        //    //float newRotationZ = Mathf.Clamp(currentRotation.z + adjustedLeverRotation.z, -rotationLimit, rotationLimit);
+
+        //    //Quaternion targetRotation = Quaternion.Euler(newRotationX, currentRotation.y, newRotationZ);
+        //    //lever.localRotation = Quaternion.RotateTowards(lever.localRotation, targetRotation, 1f);
+        //}
+        //else { lever.localRotation = Quaternion.Euler(15f, 0f, 0f); }
     }
 }
 #endregion

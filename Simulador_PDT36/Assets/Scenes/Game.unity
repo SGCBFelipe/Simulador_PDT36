@@ -6377,6 +6377,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 136.28996
       objectReference: {fileID: 0}
+    - target: {fileID: 620226770748450759, guid: bd03b9386e174fd41a85ff47c8f370f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 620226770748450759, guid: bd03b9386e174fd41a85ff47c8f370f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 693429694378642810, guid: bd03b9386e174fd41a85ff47c8f370f4,
         type: 3}
       propertyPath: _width
@@ -6551,6 +6561,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 5.9999847
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815960738789453523, guid: bd03b9386e174fd41a85ff47c8f370f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815960738789453523, guid: bd03b9386e174fd41a85ff47c8f370f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2940146722447256325, guid: bd03b9386e174fd41a85ff47c8f370f4,
         type: 3}
@@ -7225,6 +7245,11 @@ PrefabInstance:
       propertyPath: RbladesAnimator
       value: 
       objectReference: {fileID: 2140772048}
+    - target: {fileID: 8885619894156005078, guid: bd03b9386e174fd41a85ff47c8f370f4,
+        type: 3}
+      propertyPath: leverSpeedRotation
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4282527697539583025, guid: bd03b9386e174fd41a85ff47c8f370f4, type: 3}
     m_RemovedGameObjects:
