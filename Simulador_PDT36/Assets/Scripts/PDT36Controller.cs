@@ -294,10 +294,10 @@ public class LeversMovement
 
     public void RotationWithInput(Vector3 input, Transform lever)
     {
-        float clampX = Math.Clamp(input.x, -0.5f, 0.5f);
-        float clampY = Math.Clamp(input.y, -0.5f, 0.5f);
+        float clampX = Math.Clamp(input.x, -0.3f, 0.3f);
+        float clampY = Math.Clamp(input.y, -0.3f, 0.3f);
 
-        lever.localRotation = new(clampY, 0f, -clampX, 1f);
+        lever.localRotation = new(clampY, 0f, -clampX , 1f);
 
         //if (input.magnitude > 0)
         //{
