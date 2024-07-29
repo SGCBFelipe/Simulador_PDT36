@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour
     {
         _input = GetComponent<PlayerInput>();
         _inputMap = _input.currentActionMap;
-        
 
         #region Assigning Controls
         _inputMap = _input.currentActionMap; // Receive the selected control map
