@@ -294,11 +294,14 @@ public class LeversMovement
 
     public void RotationWithInput(Vector3 input, Transform lever)
     {
-        float clampX = Math.Clamp(input.x, -0.3f, 0.3f);
-        float clampY = Math.Clamp(input.y, -0.3f, 0.3f);
+        if (input.magnitude > 0)
+        {
+            float clampX = Math.Clamp(input.x, -0.3f, 0.3f);
+            float clampY = Math.Clamp(input.y, -0.3f, 0.3f);
 
-        lever.localRotation = new(clampY, 0f, -clampX , 1f);
-
+            lever.localRotation = new(clampY, 0f, -clampX, 1f);
+        }
+        else { lever.localRotation = Quaternion.Euler(0f, 0f, 0f); }
         //if (input.magnitude > 0)
         //{
         //    //Vector3 adjustedLeverRotation = new(input.y, 0f, -input.x), currentRotation = lever.localEulerAngles;
