@@ -23,6 +23,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float timeTarget;
     public List<Sprite> imagesList = new();
     public bool ActiveImage = false;
+
+    [Header("Game Canvas")]
+    public List<GameObject> canvasGame = new();
+
+    [Header("Tutorial Canvas")]
+    public List<GameObject> canvasTutorial = new();
+    
     #endregion
 
     private void Awake()

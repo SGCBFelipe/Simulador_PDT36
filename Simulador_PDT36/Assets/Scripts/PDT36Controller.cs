@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -29,6 +30,7 @@ public class PDT36Controller : MonoBehaviour
     public GameObject canvas, machineLights;
     public bool onOffMachine = false, blades = false;
     public Animator RbladesAnimator, LbladesAnimator;
+    public TextMeshProUGUI leftJoy, rightJoy;
     #endregion
     #endregion
 
@@ -85,7 +87,6 @@ public class PDT36Controller : MonoBehaviour
 
     private void Awake()
     {
-
         #region Assigning Variables
         #region Machine
         _rb = GetComponent<Rigidbody>();
@@ -118,6 +119,9 @@ public class PDT36Controller : MonoBehaviour
         _lever.RotationWithInput(_rightMove, _rightStick);
         machineVelocity = _rb.velocity;
         _machine.MaxVelocity();
+
+        leftJoy.text = $"Left Joy {_leftMove}";
+        rightJoy.text = $"Right Joy {_rightMove}";
     }
 
     private void FixedUpdate()
@@ -129,10 +133,12 @@ public class PDT36Controller : MonoBehaviour
             if (_leftMove + _rightMove != Vector2.zero)
             { 
                 _machine.AccelerateSpeed();    
+                manager.audioManager.PlaySound("Laminas");
             }
             else 
             { 
                 _machine.DecelerateSpeed();
+                manager.audioManager.StopSound("Laminas");
                 blades = false;
             }
 
@@ -140,14 +146,11 @@ public class PDT36Controller : MonoBehaviour
             {
                 if (blades)
                 {
-                    //manager.audioManager.StopSound(manager.audioManager.currentSound.name);
-                    manager.audioManager.PlaySound("Laminas");
                     RbladesAnimator.SetBool("Active", true);
                     LbladesAnimator.SetBool("Active", true);
                 }
                 else
                 {
-                    manager.audioManager.StopSound("Laminas");
                     RbladesAnimator.SetBool("Active", false);
                     LbladesAnimator.SetBool("Active", false);
                 }
@@ -270,7 +273,7 @@ public class MachineMovement
 public class LeversMovement
 {
     private Transform _leftLever, _rightLever;
-    private float speed = 100f, rotationLimit = 30f;
+    private float speed = 100f;
 
     #region Getters & Setters
     public Transform LeftLever
@@ -294,28 +297,19 @@ public class LeversMovement
 
     public void RotationWithInput(Vector3 input, Transform lever)
     {
+
+        //Debug.Log($"Lever: {lever.name} | LOG: {lever.localRotation}");
+
         if (input.magnitude > 0)
         {
             float clampX = Math.Clamp(input.x, -0.3f, 0.3f);
             float clampY = Math.Clamp(input.y, -0.3f, 0.3f);
 
             lever.localRotation = new(clampY, 0f, -clampX, 1f);
+
+            
         }
         else { lever.localRotation = Quaternion.Euler(0f, 0f, 0f); }
-        //if (input.magnitude > 0)
-        //{
-        //    //Vector3 adjustedLeverRotation = new(input.y, 0f, -input.x), currentRotation = lever.localEulerAngles;
-
-        //    //currentRotation.x = (currentRotation.x > 180) ? currentRotation.x - 360 : currentRotation.x;
-        //    //currentRotation.z = (currentRotation.z > 180) ? currentRotation.z - 360 : currentRotation.z;
-
-        //    //float newRotationX = Mathf.Clamp(currentRotation.x + adjustedLeverRotation.x, 15f - rotationLimit, 15f + rotationLimit);
-        //    //float newRotationZ = Mathf.Clamp(currentRotation.z + adjustedLeverRotation.z, -rotationLimit, rotationLimit);
-
-        //    //Quaternion targetRotation = Quaternion.Euler(newRotationX, currentRotation.y, newRotationZ);
-        //    //lever.localRotation = Quaternion.RotateTowards(lever.localRotation, targetRotation, 1f);
-        //}
-        //else { lever.localRotation = Quaternion.Euler(15f, 0f, 0f); }
     }
 }
 #endregion
