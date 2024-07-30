@@ -582,7 +582,7 @@ MonoBehaviour:
     sound: {fileID: 8300000, guid: 87f35a3f75e45164599f1eaf3da1860e, type: 3}
     mixer: {fileID: -6914228214122105048, guid: 3aa37abbbab1c1c4597df73e347abfb8,
       type: 2}
-    volume: 0.2
+    volume: 0.4
     loop: 0
     playOnAwake: 0
   - source: {fileID: 0}
@@ -590,7 +590,7 @@ MonoBehaviour:
     sound: {fileID: 8300000, guid: 51847f4388ff670488cf8efec59a1c6f, type: 3}
     mixer: {fileID: -6914228214122105048, guid: 3aa37abbbab1c1c4597df73e347abfb8,
       type: 2}
-    volume: 0.25
+    volume: 0.3
     loop: 1
     playOnAwake: 0
   - source: {fileID: 0}
@@ -598,7 +598,7 @@ MonoBehaviour:
     sound: {fileID: 8300000, guid: a06afabec97cd694c9e83843d4e66db0, type: 3}
     mixer: {fileID: -6914228214122105048, guid: 3aa37abbbab1c1c4597df73e347abfb8,
       type: 2}
-    volume: 0.3
+    volume: 0.35
     loop: 1
     playOnAwake: 0
   currentSound:
@@ -9252,7 +9252,7 @@ PrefabInstance:
     - target: {fileID: 1327569896286795705, guid: bd03b9386e174fd41a85ff47c8f370f4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.8
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 1386537482493770464, guid: bd03b9386e174fd41a85ff47c8f370f4,
         type: 3}
