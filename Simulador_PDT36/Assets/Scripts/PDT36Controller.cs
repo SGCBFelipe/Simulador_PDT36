@@ -133,12 +133,10 @@ public class PDT36Controller : MonoBehaviour
             if (_leftMove + _rightMove != Vector2.zero)
             { 
                 _machine.AccelerateSpeed();    
-                manager.audioManager.PlaySound("Laminas");
             }
             else 
             { 
                 _machine.DecelerateSpeed();
-                manager.audioManager.StopSound("Laminas");
                 blades = false;
             }
 
@@ -146,11 +144,13 @@ public class PDT36Controller : MonoBehaviour
             {
                 if (blades)
                 {
+                    manager.audioManager.PlaySound("Laminas");
                     RbladesAnimator.SetBool("Active", true);
                     LbladesAnimator.SetBool("Active", true);
                 }
                 else
                 {
+                    manager.audioManager.StopSound("Laminas");
                     RbladesAnimator.SetBool("Active", false);
                     LbladesAnimator.SetBool("Active", false);
                 }
