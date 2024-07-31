@@ -240,7 +240,7 @@ MonoBehaviour:
   confirmButton: {fileID: 1115687388}
   startGameButton: {fileID: 585553606}
   timeType: 0
-  timeTarget: 60
+  timeTarget: 10
   imagesList:
   - {fileID: 21300000, guid: 1df8ec645eedb2944b57c04c75f3f2c1, type: 3}
   - {fileID: 21300000, guid: f334ae5084d38ee4db1ab07e3a4d32c6, type: 3}
@@ -249,6 +249,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bff7fedba82b6be4f9fa66e95df6c94c, type: 3}
   - {fileID: 21300000, guid: 78513b8fc5982604e838d8aec93d7538, type: 3}
   ActiveImage: 0
+  start: 0
   videosTextures:
   - {fileID: 8400000, guid: 4160f709dd4bee84581ee0dba2568376, type: 2}
   - {fileID: 8400000, guid: 4160f709dd4bee84581ee0dba2568376, type: 2}
