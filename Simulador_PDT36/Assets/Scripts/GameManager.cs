@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -11,25 +12,29 @@ public class GameManager : MonoBehaviour
     #region Privates
     private PlayerInput _input;
     private InputActionMap _inputMap;
-    private float time;
+    private float _time;
+    private int _tutoIndex = 0;
     #endregion
 
     #region Publics
     public PDT36Controller pdt;
     public AudioManager audioManager;
-    public TextMeshProUGUI veloctyText, timer;
-    public GameObject orbImage;
+    public TextMeshProUGUI veloctyText, timer, tutorialButtonText;
+    public GameObject orbImage, video, logo, confirmButton, startGameButton;
     public TimeType timeType;
     [SerializeField] private float timeTarget;
     public List<Sprite> imagesList = new();
-    public bool ActiveImage = false;
+    public bool ActiveImage = false, start = false;
+    public RenderTexture[] videosTextures;
 
     [Header("Game Canvas")]
     public List<GameObject> canvasGame = new();
 
     [Header("Tutorial Canvas")]
-    public List<GameObject> canvasTutorial = new();
-    
+    public List<GameObject> tutorialCanvas = new();
+
+    [Header("End Game Canvas")]
+    public List<GameObject> endGameCanvas = new();
     #endregion
 
     private void Awake()
@@ -58,48 +63,64 @@ public class GameManager : MonoBehaviour
             pdt.RightInput = _inputMap.FindAction("VR_Right"); // VR Right stick
         }
 
-        //_inputMap.FindAction("ButtonOnOff").performed += TurnOnOffMachine;
+        //_inputMap.FindAction("ButtonOnOff").performed += TurnOnMachine;
         #endregion
 
         if (timeType == TimeType.Countdown)
         {
-            time = timeTarget;
+            _time = timeTarget;
         }
     }
 
     private void Update()
     {
         veloctyText.text = "Velocity: " + (int)pdt.currentSpeed;
-        switch (timeType)
+        if (start)
         {
-            case TimeType.Countdown:
-                Countdown();
-                break;
-            case TimeType.Time:
-                Timer();
-                break;
+            switch (timeType)
+            {
+                case TimeType.Countdown:
+                    Countdown();
+                    break;
+                case TimeType.Time:
+                    Timer();
+                    break;
+            }
         }
     }
 
-    public void TurnOnOffMachine(InputAction.CallbackContext value)
+    public void TurnOnMachine()
     {
-        if (value.performed)
+        foreach(GameObject obj in tutorialCanvas)
         {
-            pdt.onOffMachine = !pdt.onOffMachine;
-            if (pdt.onOffMachine) { audioManager.PlaySound("Partida"); }
-            StartCoroutine(PlayMotor());
+            Destroy(obj);
         }
+
+        foreach (GameObject obj in canvasGame)
+        {
+            obj.SetActive(true);
+        }
+
+        start = true;
+        pdt.onOffMachine = true;
+        if (pdt.onOffMachine) { audioManager.PlaySound("Partida"); }
+        StartCoroutine(PlayMotor());
     }
 
-    private IEnumerator PlayMotor()
+    public void TurnOffMachine()
     {
-        AudioSource partidaSource = audioManager.GetAudioSource("Partida");
-        while (partidaSource.isPlaying)
+        foreach(GameObject obj in endGameCanvas)
         {
-            yield return null;
+            obj.SetActive(true);
         }
 
-        audioManager.PlaySound("Motor");
+        foreach(GameObject obj in canvasGame)
+        {
+            obj.SetActive(false);
+        }
+        pdt.onOffMachine = false;
+        start = false;
+        if (!pdt.onOffMachine) { audioManager.StopSound("Motor"); audioManager.StopSound("Laminas"); }
     }
 
     public void EnableNewPhrase(int index)
@@ -120,6 +141,42 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    #region Tutorial
+    public void NextTutorial()
+    {
+        if(_tutoIndex >= videosTextures.Length)
+        {
+            return;
+        }
+        else
+        {
+            if (_tutoIndex == 0)
+            {
+                logo.GetComponent<Animator>().SetBool("FadeOut", true);
+                StartCoroutine(SetEnable(logo, false, 3f));
+                video.GetComponent<RawImage>().texture = videosTextures[_tutoIndex];
+                video.GetComponent<Animator>().SetBool("FadeIn", true);
+                _tutoIndex++;
+            }
+            else
+            {
+                video.GetComponent<Animator>().SetBool("FadeIn", false);
+                video.GetComponent<Animator>().SetBool("FadeOut", true);
+                video.GetComponent<RawImage>().texture = videosTextures[_tutoIndex];
+                StartCoroutine(Fade(video, "FadeIn", true, 0.5f));
+                StartCoroutine(Fade(video, "FadeOut", false, 0.5f));
+                _tutoIndex++;
+            }
+        }
+    }
+
+    #endregion
+
     #region Timer
     public enum TimeType
     {
@@ -129,22 +186,52 @@ public class GameManager : MonoBehaviour
 
     public void Countdown()
     {
-        if(time > 0) { time -= Time.deltaTime; }
-        else { time = 0; }        
-        int min = Mathf.FloorToInt(time / 60);
-        int sec = Mathf.FloorToInt(time % 60);
+        if(_time > 0) { _time -= Time.deltaTime; }
+        else { _time = 0; }        
+        int min = Mathf.FloorToInt(_time / 60);
+        int sec = Mathf.FloorToInt(_time % 60);
         timer.text = string.Format("{0:00}:{1:00}", min, sec);
+
+        if(_time <= 0)
+        {
+            TurnOffMachine();
+        }
     }
 
     public void Timer()
     {
-        if(time <= timeTarget)
+        if(_time <= timeTarget)
         {
-            time += Time.deltaTime;
-            int min = Mathf.FloorToInt(time / 60);
-            int sec = Mathf.FloorToInt(time % 60);
+            _time += Time.deltaTime;
+            int min = Mathf.FloorToInt(_time / 60);
+            int sec = Mathf.FloorToInt(_time % 60);
             timer.text = string.Format("{0:00}:{1:00}", min, sec);
         }
+    }
+    #endregion
+    
+    #region Coroutines
+    private IEnumerator PlayMotor()
+    {
+        AudioSource partidaSource = audioManager.GetAudioSource("Partida");
+        while (partidaSource.isPlaying)
+        {
+            yield return null;
+        }
+
+        audioManager.PlaySound("Motor");
+    }
+
+    IEnumerator SetEnable(GameObject obj, bool value, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        obj.SetActive(value);
+    }
+
+    IEnumerator Fade(GameObject obj, string parameter, bool value, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        obj.GetComponent<Animator>().SetBool(parameter, value);
     }
     #endregion
 }
