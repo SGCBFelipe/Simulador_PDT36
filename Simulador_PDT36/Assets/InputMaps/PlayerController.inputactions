@@ -178,40 +178,9 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "ButtonOnOff",
-                    "type": "Button",
-                    "id": "a7d3d921-24ba-43df-b082-ae2bbbbcd492",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "b6de3f0f-8024-4052-bbd8-1570bb02db88",
-                    "path": "<XInputController>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ButtonOnOff",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1fb55cca-37e5-4f43-a83b-e5cc8375abed",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ButtonOnOff",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "Right Stick 4 Composite",
                     "id": "faa6acde-4a64-4751-8723-3af45443ed09",

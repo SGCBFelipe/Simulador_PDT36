@@ -18,9 +18,10 @@ public class GameManager : MonoBehaviour
 
     #region Publics
     public PDT36Controller pdt;
+    public Camera playerCamera;
     public AudioManager audioManager;
     public TextMeshProUGUI veloctyText, timer, tutorialButtonText;
-    public GameObject orbImage, video, logo, confirmButton, startGameButton;
+    public GameObject orbImage, video, logo, BG, restartGameButton;
     public TimeType timeType;
     [SerializeField] private float timeTarget;
     public List<Sprite> imagesList = new();
@@ -36,6 +37,18 @@ public class GameManager : MonoBehaviour
     [Header("End Game Canvas")]
     public List<GameObject> endGameCanvas = new();
     #endregion
+
+    private void Start()
+    {
+        restartGameButton.GetComponent<Button>().interactable = true;
+        StartCoroutine(Fade(logo, "FadeIn", true, 0.5f));
+        StartCoroutine(Fade(logo, "FadeOut", true, 3.5f));
+        StartCoroutine(Fade(BG, "FadeIn", true, 4f));
+        StartCoroutine(Fade(video, "FadeIn", true, 5f));
+        StartCoroutine(Fade(BG, "FadeOut", true, 15f));
+        StartCoroutine(Fade(video, "FadeOut", true, 15f));
+        Invoke("TurnOnMachine", 15f);
+    }
 
     private void Awake()
     {
@@ -120,6 +133,7 @@ public class GameManager : MonoBehaviour
         }
         pdt.onOffMachine = false;
         start = false;
+        //restartGameButton.GetComponent<Button>().interactable = true;
         if (!pdt.onOffMachine) { audioManager.StopSound("Motor"); audioManager.StopSound("Laminas"); }
     }
 
@@ -147,33 +161,34 @@ public class GameManager : MonoBehaviour
     }
 
     #region Tutorial
-    public void NextTutorial()
-    {
-        if(_tutoIndex >= videosTextures.Length)
-        {
-            return;
-        }
-        else
-        {
-            if (_tutoIndex == 0)
-            {
-                logo.GetComponent<Animator>().SetBool("FadeOut", true);
-                StartCoroutine(SetEnable(logo, false, 3f));
-                video.GetComponent<RawImage>().texture = videosTextures[_tutoIndex];
-                video.GetComponent<Animator>().SetBool("FadeIn", true);
-                _tutoIndex++;
-            }
-            else
-            {
-                video.GetComponent<Animator>().SetBool("FadeIn", false);
-                video.GetComponent<Animator>().SetBool("FadeOut", true);
-                video.GetComponent<RawImage>().texture = videosTextures[_tutoIndex];
-                StartCoroutine(Fade(video, "FadeIn", true, 0.5f));
-                StartCoroutine(Fade(video, "FadeOut", false, 0.5f));
-                _tutoIndex++;
-            }
-        }
-    }
+    //public void NextTutorial()
+    //{
+    //    if(_tutoIndex >= videosTextures.Length)
+    //    {
+    //        return;
+    //    }
+    //    else
+    //    {
+    //        if (_tutoIndex == 0)
+    //        {
+    //            logo.GetComponent<Animator>().SetBool("FadeOut", true);
+    //            StartCoroutine(SetEnable(logo, false, 3f));
+    //            video.GetComponent<RawImage>().texture = videosTextures[_tutoIndex];
+    //            video.GetComponent<Animator>().SetBool("FadeIn", true);
+    //            _tutoIndex++;
+    //        }
+    //        else
+    //        {
+    //            video.GetComponent<Animator>().SetBool("FadeIn", false);
+    //            video.GetComponent<Animator>().SetBool("FadeOut", true);
+    //            video.GetComponent<RawImage>().texture = videosTextures[_tutoIndex];
+    //            video.GetComponent<Animator>().SetBool("FadeIn", true);
+    //            //StartCoroutine(Fade(video, "FadeIn", true, 0.5f));
+    //            StartCoroutine(Fade(video, "FadeOut", false, 0.5f));
+    //            _tutoIndex++;
+    //        }
+    //    }
+    //}
 
     #endregion
 

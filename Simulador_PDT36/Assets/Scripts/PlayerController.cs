@@ -200,40 +200,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""ButtonOnOff"",
-                    ""type"": ""Button"",
-                    ""id"": ""a7d3d921-24ba-43df-b082-ae2bbbbcd492"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""b6de3f0f-8024-4052-bbd8-1570bb02db88"",
-                    ""path"": ""<XInputController>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ButtonOnOff"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1fb55cca-37e5-4f43-a83b-e5cc8375abed"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ButtonOnOff"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": ""Right Stick 4 Composite"",
                     ""id"": ""faa6acde-4a64-4751-8723-3af45443ed09"",
@@ -494,7 +463,6 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         m_XboxController = asset.FindActionMap("Xbox Controller", throwIfNotFound: true);
         m_XboxController_XCTL_Left = m_XboxController.FindAction("XCTL_Left", throwIfNotFound: true);
         m_XboxController_XCTL_Right = m_XboxController.FindAction("XCTL_Right", throwIfNotFound: true);
-        m_XboxController_ButtonOnOff = m_XboxController.FindAction("ButtonOnOff", throwIfNotFound: true);
         // VR Controller
         m_VRController = asset.FindActionMap("VR Controller", throwIfNotFound: true);
         m_VRController_VR_Left = m_VRController.FindAction("VR_Left", throwIfNotFound: true);
@@ -624,14 +592,12 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     private List<IXboxControllerActions> m_XboxControllerActionsCallbackInterfaces = new List<IXboxControllerActions>();
     private readonly InputAction m_XboxController_XCTL_Left;
     private readonly InputAction m_XboxController_XCTL_Right;
-    private readonly InputAction m_XboxController_ButtonOnOff;
     public struct XboxControllerActions
     {
         private @PlayerController m_Wrapper;
         public XboxControllerActions(@PlayerController wrapper) { m_Wrapper = wrapper; }
         public InputAction @XCTL_Left => m_Wrapper.m_XboxController_XCTL_Left;
         public InputAction @XCTL_Right => m_Wrapper.m_XboxController_XCTL_Right;
-        public InputAction @ButtonOnOff => m_Wrapper.m_XboxController_ButtonOnOff;
         public InputActionMap Get() { return m_Wrapper.m_XboxController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -647,9 +613,6 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @XCTL_Right.started += instance.OnXCTL_Right;
             @XCTL_Right.performed += instance.OnXCTL_Right;
             @XCTL_Right.canceled += instance.OnXCTL_Right;
-            @ButtonOnOff.started += instance.OnButtonOnOff;
-            @ButtonOnOff.performed += instance.OnButtonOnOff;
-            @ButtonOnOff.canceled += instance.OnButtonOnOff;
         }
 
         private void UnregisterCallbacks(IXboxControllerActions instance)
@@ -660,9 +623,6 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @XCTL_Right.started -= instance.OnXCTL_Right;
             @XCTL_Right.performed -= instance.OnXCTL_Right;
             @XCTL_Right.canceled -= instance.OnXCTL_Right;
-            @ButtonOnOff.started -= instance.OnButtonOnOff;
-            @ButtonOnOff.performed -= instance.OnButtonOnOff;
-            @ButtonOnOff.canceled -= instance.OnButtonOnOff;
         }
 
         public void RemoveCallbacks(IXboxControllerActions instance)
@@ -744,7 +704,6 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     {
         void OnXCTL_Left(InputAction.CallbackContext context);
         void OnXCTL_Right(InputAction.CallbackContext context);
-        void OnButtonOnOff(InputAction.CallbackContext context);
     }
     public interface IVRControllerActions
     {
