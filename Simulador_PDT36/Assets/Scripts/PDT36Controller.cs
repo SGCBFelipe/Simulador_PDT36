@@ -126,6 +126,7 @@ public class PDT36Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
+        print($"Blades: {blades} | Previous Blade: {previousBladesState}");
         //It only works when the machine is turned on
         if (onOffMachine)
         {
@@ -158,30 +159,68 @@ public class PDT36Controller : MonoBehaviour
                 previousBladesState = blades;
             }
 
-            #region Call Movements
-            // Forward
-            if (_leftMove.y > 0 && _rightMove.y > 0) { _machine.Forward(); blades = true;}
-
-            // Left
-            if (_rightMove.x < -0.5) { _machine.Left(); blades = true;}
-
-            // Right
-            if (_rightMove.x > 0.5) { _machine.Right(); blades = true;}
-
-            // Back
-            if (_leftMove.y < 0 && _rightMove.y < 0) { _machine.Back(); blades = true;}
-
-            // Can Rotate
-            else { Invoke(nameof(CallSetCanRotate), 1f); }
+            #region Call Movements e Call Rotations
+            if (_leftMove.y > 0 && _rightMove.y > 0) // Forward
+            {
+                _machine.Forward();
+                blades = true;
+            }
+            else if (_rightMove.x < -0.5) // Left
+            {
+                _machine.Left();
+                blades = true;
+            }
+            else if (_rightMove.x > 0.5) // Right
+            {
+                _machine.Right();
+                blades = true;
+            }
+            else if (_leftMove.y < 0 && _rightMove.y < 0) // Back
+            {
+                _machine.Back();
+                blades = true;
+            }
+            else if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate) // Left Rotate
+            {
+                _machine.LeftForward();
+                blades = true;
+            }
+            else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate) // Right Forward
+            {
+                _machine.RightForward();
+                blades = true;
+            }
+            else
+            {
+                Invoke(nameof(CallSetCanRotate), 1f);
+            }
             #endregion
 
-            #region Call Rotations
-            // Left Forward
-            if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate) { _machine.LeftForward(); blades = true;}
 
-            // Right Forward
-            else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate) { _machine.RightForward(); blades = true;}
-            #endregion
+            //#region Call Movements
+            //// Forward
+            //if (_leftMove.y > 0 && _rightMove.y > 0) { _machine.Forward(); blades = true;}
+
+            //// Left
+            //if (_rightMove.x < -0.5) { _machine.Left(); blades = true;}
+
+            //// Right
+            //if (_rightMove.x > 0.5) { _machine.Right(); blades = true;}
+
+            //// Back
+            //if (_leftMove.y < 0 && _rightMove.y < 0) { _machine.Back(); blades = true;}
+
+            //// Can Rotate
+            //else { Invoke(nameof(CallSetCanRotate), 1f); }
+            //#endregion
+
+            //#region Call Rotations
+            //// Left Forward
+            //if (_leftMove.y > 0 && _rightMove.y < 0 && _machine.CanRotate) { _machine.LeftForward(); blades = true; previousBladesState = !blades; }
+
+            //// Right Forward
+            //else if (_rightMove.y > 0 && _leftMove.y < 0 && _machine.CanRotate) { _machine.RightForward(); blades = true; previousBladesState = !blades; }
+            //#endregion
         }
     }
 }

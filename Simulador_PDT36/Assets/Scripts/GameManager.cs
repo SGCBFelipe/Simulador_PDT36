@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public Camera playerCamera;
     public AudioManager audioManager;
     public TextMeshProUGUI veloctyText, timer, tutorialButtonText;
-    public GameObject orbImage, video, logo, BG, restartGameButton;
+    public GameObject orbImage, videoForwardBack, videoLeftRight, videoSelfRotation, logo, BG, restartGameButton;
     public TimeType timeType;
     [SerializeField] private float timeTarget;
     public List<Sprite> imagesList = new();
@@ -44,9 +44,13 @@ public class GameManager : MonoBehaviour
         StartCoroutine(Fade(logo, "FadeIn", true, 0.5f));
         StartCoroutine(Fade(logo, "FadeOut", true, 3.5f));
         StartCoroutine(Fade(BG, "FadeIn", true, 4f));
-        StartCoroutine(Fade(video, "FadeIn", true, 5f));
+        StartCoroutine(Fade(videoForwardBack, "FadeIn", true, 5f));
+        StartCoroutine(Fade(videoLeftRight, "FadeIn", true, 5.2f));
+        StartCoroutine(Fade(videoSelfRotation, "FadeIn", true, 5.4f));
         StartCoroutine(Fade(BG, "FadeOut", true, 15f));
-        StartCoroutine(Fade(video, "FadeOut", true, 15f));
+        StartCoroutine(Fade(videoForwardBack, "FadeOut", true, 15f));
+        StartCoroutine(Fade(videoLeftRight, "FadeOut", true, 15f));
+        StartCoroutine(Fade(videoSelfRotation, "FadeOut", true, 15f));
         Invoke("TurnOnMachine", 15f);
     }
 
@@ -173,18 +177,18 @@ public class GameManager : MonoBehaviour
     //        {
     //            logo.GetComponent<Animator>().SetBool("FadeOut", true);
     //            StartCoroutine(SetEnable(logo, false, 3f));
-    //            video.GetComponent<RawImage>().texture = videosTextures[_tutoIndex];
-    //            video.GetComponent<Animator>().SetBool("FadeIn", true);
+    //            videoForwardBack.GetComponent<RawImage>().texture = videosTextures[_tutoIndex];
+    //            videoForwardBack.GetComponent<Animator>().SetBool("FadeIn", true);
     //            _tutoIndex++;
     //        }
     //        else
     //        {
-    //            video.GetComponent<Animator>().SetBool("FadeIn", false);
-    //            video.GetComponent<Animator>().SetBool("FadeOut", true);
-    //            video.GetComponent<RawImage>().texture = videosTextures[_tutoIndex];
-    //            video.GetComponent<Animator>().SetBool("FadeIn", true);
-    //            //StartCoroutine(Fade(video, "FadeIn", true, 0.5f));
-    //            StartCoroutine(Fade(video, "FadeOut", false, 0.5f));
+    //            videoForwardBack.GetComponent<Animator>().SetBool("FadeIn", false);
+    //            videoForwardBack.GetComponent<Animator>().SetBool("FadeOut", true);
+    //            videoForwardBack.GetComponent<RawImage>().texture = videosTextures[_tutoIndex];
+    //            videoForwardBack.GetComponent<Animator>().SetBool("FadeIn", true);
+    //            //StartCoroutine(Fade(videoForwardBack, "FadeIn", true, 0.5f));
+    //            StartCoroutine(Fade(videoForwardBack, "FadeOut", false, 0.5f));
     //            _tutoIndex++;
     //        }
     //    }
