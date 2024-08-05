@@ -166,7 +166,16 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        foreach (GameObject obj in canvasGame)
+        {
+            obj.SetActive(false);
+        }
+        foreach (GameObject obj in endGameCanvas)
+        {
+            obj.SetActive(false);
+        }
+        StartCoroutine(Fade(BG, "FadeIn", true, 0));
+        StartCoroutine(RestartLevel(5f));
     }
 
     #region Tutorial
@@ -256,6 +265,12 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         obj.GetComponent<Animator>().SetBool(parameter, value);
+    }
+
+    IEnumerator RestartLevel(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     #endregion
 }
