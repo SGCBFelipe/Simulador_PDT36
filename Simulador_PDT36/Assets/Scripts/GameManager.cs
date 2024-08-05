@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public Camera playerCamera;
     public AudioManager audioManager;
     public TextMeshProUGUI veloctyText, timer, tutorialButtonText;
-    public GameObject orbImage, videoForwardBack, videoLeftRight, videoSelfRotation, logo, BG, restartGameButton;
+    public GameObject orbImage, BGForwardBack, videoForwardBack, BGLeftRight, videoLeftRight, BGSelfRotation, videoSelfRotation, logo, BG, restartGameButton;
     public TimeType timeType;
     [SerializeField] private float timeTarget;
     public List<Sprite> imagesList = new();
@@ -41,16 +41,22 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Fade(logo, "FadeIn", true, 0.5f));
-        StartCoroutine(Fade(logo, "FadeOut", true, 3.5f));
-        StartCoroutine(Fade(BG, "FadeIn", true, 4f));
+        StartCoroutine(Fade(logo, "FadeOut", true, 4.5f));
+        //StartCoroutine(Fade(BG, "FadeIn", true, 4f));
+        StartCoroutine(Fade(BGForwardBack, "FadeIn", true, 5f));
+        StartCoroutine(Fade(BGLeftRight, "FadeIn", true, 5f));
+        StartCoroutine(Fade(BGSelfRotation, "FadeIn", true, 5f));
         StartCoroutine(Fade(videoForwardBack, "FadeIn", true, 5f));
         StartCoroutine(Fade(videoLeftRight, "FadeIn", true, 5f));
         StartCoroutine(Fade(videoSelfRotation, "FadeIn", true, 5f));
-        StartCoroutine(Fade(BG, "FadeOut", true, 15f));
-        StartCoroutine(Fade(videoForwardBack, "FadeOut", true, 15f));
-        StartCoroutine(Fade(videoLeftRight, "FadeOut", true, 15f));
-        StartCoroutine(Fade(videoSelfRotation, "FadeOut", true, 15f));
-        Invoke("TurnOnMachine", 15f);
+        StartCoroutine(Fade(BGForwardBack, "FadeOut", true, 25f));
+        StartCoroutine(Fade(BGLeftRight, "FadeOut", true, 25f));
+        StartCoroutine(Fade(BGSelfRotation, "FadeOut", true, 25f));
+        StartCoroutine(Fade(videoForwardBack, "FadeOut", true, 25f));
+        StartCoroutine(Fade(videoLeftRight, "FadeOut", true, 25f));
+        StartCoroutine(Fade(videoSelfRotation, "FadeOut", true, 25f));
+        StartCoroutine(Fade(BG, "FadeOut", true, 26f));
+        Invoke("TurnOnMachine", 29f);
     }
 
     private void Awake()
