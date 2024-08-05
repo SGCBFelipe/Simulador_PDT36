@@ -40,13 +40,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        restartGameButton.GetComponent<Button>().interactable = true;
         StartCoroutine(Fade(logo, "FadeIn", true, 0.5f));
         StartCoroutine(Fade(logo, "FadeOut", true, 3.5f));
         StartCoroutine(Fade(BG, "FadeIn", true, 4f));
         StartCoroutine(Fade(videoForwardBack, "FadeIn", true, 5f));
-        StartCoroutine(Fade(videoLeftRight, "FadeIn", true, 5.2f));
-        StartCoroutine(Fade(videoSelfRotation, "FadeIn", true, 5.4f));
+        StartCoroutine(Fade(videoLeftRight, "FadeIn", true, 5f));
+        StartCoroutine(Fade(videoSelfRotation, "FadeIn", true, 5f));
         StartCoroutine(Fade(BG, "FadeOut", true, 15f));
         StartCoroutine(Fade(videoForwardBack, "FadeOut", true, 15f));
         StartCoroutine(Fade(videoLeftRight, "FadeOut", true, 15f));
